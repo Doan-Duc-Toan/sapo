@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="css/fontawesome/css/all.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/product_detail.css">
+    <script src="js/jquery.js"></script>
+    <title>SapoShop</title>
+</head>
+
+<body>
+    <div id="wrapper" class="container">
+        <div class="row">
+            <div class="col-md-2" id="sidebar">
+                <div class="">
+                    <ul class="row" id="navbar">
+                        <li class="col-md-12 nav-item" id="logo"><a href=""><img src="img/Sapo-logo (1).svg" alt=""></a>
+                        </li>
+                        <li class="col-md-12 nav-item">
+                            <a class="item-link" href=""><i class="fa-solid fa-house"></i><span>Tổng quan</span></a>
+                        </li>
+                        <li class="col-md-12 nav-item" id="order">
+                            <a href="" class="item-link"><i class="fa-solid fa-check-to-slot"></i><span>Đơn
+                                    hàng</span></a>
+                            <i class="fa-solid fa-greater-than"></i>
+                            <ul class="container sub-menu">
+                                <div class="row">
+                                    <li class="col-md-12"><a href="">Danh sách đơn hàng</a></li>
+                                    <li class="col-md-12"><a href="">Đơn hàng chưa hoàn tất</a></li>
+                                </div>
+                            </ul>
+                        </li>
+
+                        <li class="col-md-12 nav-item" id="product">
+                            <a href="" class="item-link"><i class="fa-solid fa-box"></i><span>Sản phẩm</span> </a>
+                            <i class="fa-solid fa-greater-than"></i>
+                            <ul class="container sub-menu">
+                                <div class="row">
+                                    <li class="col-md-12"><a href="">Danh sách sản phẩm</a></li>
+                                    <li class="col-md-12"><a href="">Danh mục sản phẩm</a></li>
+                                    <li class="col-md-12"><a href="">Quản lý kho cá nhân</a></li>
+                                </div>
+                            </ul>
+                        </li>
+                        <li class="col-md-12 nav-item" id="product">
+                            <a href="" class="item-link"><i class="fa-solid fa-chart-simple"></i><span>Báo cáo</span>
+                            </a>
+                            <i class="fa-solid fa-greater-than"></i>
+                            <ul class="container sub-menu">
+                                <div class="row">
+                                    <li class="col-md-12"><a href="">Danh sách sản phẩm</a></li>
+                                    <li class="col-md-12"><a href="">Danh mục sản phẩm</a></li>
+                                    <li class="col-md-12"><a href="">Quản lý kho cá nhân</a></li>
+                                </div>
+                            </ul>
+                        </li>
+                        <li class="col-md-12 nav-item" id="customer">
+                            <a href="" class="item-link"><i class="fa-solid fa-users"></i><span>Danh sách khách
+                                    hàng</span></a>
+                        </li>
+                        <li class="col-md-12 nav-item" id="post">
+                            <a href="" class="item-link"><i class="fa-solid fa-newspaper"></i><span>Danh sách bài
+                                    viết</span> </a>
+                            <i class="fa-solid fa-greater-than"></i>
+                            <ul class="container sub-menu">
+                                <div class="row">
+                                    <li class="col-md-12"><a href="">Danh sách bài viết</a></li>
+                                    <li class="col-md-12"><a href="">Danh mục bài viết</a></li>
+                                    <li class="col-md-12"><a href="">Quản lý bài viết cá nhân</a></li>
+                                </div>
+                            </ul>
+                        </li>
+                        <li class="col-md-12 nav-item" id="user">
+                            <a href="" class="item-link"><i class="fa-solid fa-user"></i><span>Người dùng</span> </a>
+                            <i class="fa-solid fa-greater-than"></i>
+                            <ul class="container sub-menu">
+                                <div class="row">
+                                    <li class="col-md-12"><a href="">Danh sách người dùng</a></li>
+                                    <li class="col-md-12"><a href="">Thêm người dùng</a></li>
+                                </div>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- -------------------------End sidebar----------------------------- -->
+            <div class="col-md-10" id="wr-content">
+                <div id="header" class="container">
+                    <div class="row">
+                        <div class="search col-md-4">
+                            <form action="">
+                                <button> <i class="fa-solid fa-magnifying-glass"></i></button>
+                                <input type="text" placeholder="Nhập từ khóa tìm kiếm">
+                            </form>
+                        </div>
+                        <div class="col-md-3" id="request">
+                            <div id="helper" class="option" data-bs-container="body" data-bs-toggle="popover"
+                                data-bs-placement="bottom" data-bs-content="<div class='popover-help'>
+                                    <div class='row' id='popover-menu'>                                                                   
+                                        <ul class='col-md-12' id='list-suggest'>
+                                            <li><a href='#'>Tổng quan về SapoShop</a></li>                                           
+                                            <li><a href='#'>Giới thiệu giao diện chung SapoShop</a></li>
+                                            <li><a href='#'>Hướng dẫn trải nghiệm SapoShop</a></li>                                           
+                                        </ul>
+                                        <div class='col-md-12 row' id='menu-suggest'>
+                                            <a href='#' class='col-md-4'>
+                                                <div class='icon'><img src='img/q-and-a-icon-23.png' alt=''></div>
+                                                <span>Câu hỏi <br> thường gặp</span>
+                                            </a>
+                                            <a href='#' class='col-md-4'>
+                                                <div class='icon'><img src='img/video-camera-simple-icon-movie-260nw-1012284634.webp' alt=''></div>
+                                                <span>Video<br> hướng dẫn</span>
+                                            </a>
+                                            <a href='#' class='col-md-4 last'>
+                                                <div class='icon'><img src='img/tải xuống (1).png' alt=''></div>
+                                                <span>Tài liệu<br> hướng dẫn</span>
+                                            </a>
+                                            
+                                        </div>
+                                        <div class='col-md-12' id='contact'>
+                                            <a class='phone'>
+                                                <i class='fa-solid fa-phone'></i>
+                                                <span>0911577985</span>
+                                            </a>
+                                            <a href='#' class='send-help'>
+                                                <i class='fa-solid fa-headphones'></i>
+                                                <span>Gửi hỗ trợ</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            " data-bs-html="true">
+                                <span class="name-option"><i class="fa-solid fa-question"></i> Trợ giúp</span>
+                            </div>
+                            <div id="feebback" class="option" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <span class="name-option"><i class="fa-solid fa-heart"></i> Góp ý</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2" id="current-user">
+                            <div id="top-profile" data-bs-container="body" data-bs-toggle="popover"
+                                data-bs-placement="bottom" data-bs-html="true" data-bs-content="
+                             <ul id='bot-profile'>
+                                 <li><a href='#'><i class='fa-regular fa-user'></i> Tài khoản của bạn</a></li>
+                                 <li><a href='#'><i class='fa-solid fa-boxes-packing'></i> Gói dịch vụ</a></li>
+                                 <li><a href='#'><i class='fa-solid fa-right-from-bracket'></i>Đăng xuất</a></li>
+                                 <li><a href='#'>Điều khoản và dịch vụ</a></li>
+                                 <li><a href='#'>Chính sách bảo mật</a></li>
+                                 <li><a href='#'>Hỗ trợ</a></li>
+                             </ul>
+                            ">
+                                <img src="img/334669696_1373825946523935_1217185962917942019_n.jpg" alt="">
+                                <span class="name-user">Đoàn Đức Toàn </span>
+                                <span class="status">Online</span>
+                            </div>
+                        </div>
+                        <div class="col-md-1" id="notify"><i data-bs-container="body" data-bs-toggle="popover"
+                                data-bs-placement="bottom" data-bs-html="true"
+                                data-bs-content="<span class='empty-notify'>Không có thông báo nào</span>"
+                                class="fa-solid fa-bell"></i></div>
+                    </div>
+                </div>
+                <!-- --------------------Content---------------- -->
+                <div id="content" class="container">
+                    <div class="row">
+                        <div class="col-md-12"><a class="back" href=""><span class="text-secondary"><i
+                                        class="fa-solid fa-backward"></i>Danh sách sản
+                                    phẩm</span></a></div>
+                        <br>
+                        <h3>Gấu bông teddy Cute</h3><br><br>
+                        <div class="col-md-12 content-detail">
+                            <form class="row" action="">
+                                <div class="col-md-7 row">
+                                    <div class="description-detail">
+                                        <div class="mb-3">
+                                            <label for="product-name" class="form-label">Tên sản phẩm</label>
+                                            <input type="text" name="" id="product-name" class="form-control"
+                                                placeholder="" value="Gấu bông teddy cute Vkl"
+                                                aria-describedby="helpId">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="description" class="form-label">Miêu tả</label>
+                                            <textarea class="form-control" name="" id="description" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 img-product">
+                                        <span>Ảnh sản phẩm</span>
+                                        <div class="mb-3">
+                                            <input type="file" class="form-control" name="" id="img-thumb"
+                                                placeholder="" aria-describedby="fileHelpId">
+                                        </div>
+                                        <button class="btn btn-primary">Cập nhật</button><br>
+                                        <div class="list-img-product row">
+                                            <div class="col-md-4">
+                                                <button>X</button>
+                                                <img src="img/anh-gau-bong-cute.jpg" alt="">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button>X</button>
+                                                <img src="img/anh-gau-bong-cute.jpg" alt="">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button>X</button>
+                                                <img src="img/anh-gau-bong-cute.jpg" alt="">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <button>X</button>
+                                                <img src="img/anh-gau-bong-cute.jpg" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 version row">
+                                        <span><b>Phiên bản</b></span><br>
+                                        <div class="col-md-6 form-group">
+                                            <label for="size" class="">Kích thước</label>
+                                            <input type="text" id="size" class="form-control" value="25cm">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label for="color" class="">Màu sắc</label>
+                                            <input type="text" id="color" class="form-control" value="Xanh">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label for="count" class="">Số lượng</label>
+                                            <input type="text" id="count" class="form-control" value="100">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label for="price" class="">Giá một sản phẩm</label>
+                                            <input type="text" id="price" class="form-control" value="500,000đ">
+                                        </div>
+                                        <div class="row col-md-12 btn-update-version-now">
+                                            <div class="col-md-3">
+                                                <button class="btn btn-primary">Cập nhật</button>
+                                            </div>
+                                        </div>
+                                        <div class=" col-md-12 table-version">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped
+                                                table-hover	
+                                                table-borderless
+                                                table-primary
+                                                align-middle">
+                                                    <thead class="table-light">
+                                                        <tr>
+                                                            <th>Kích thước</th>
+                                                            <th>Màu sắc</th>
+                                                            <th>Số lượng</th>
+                                                            <th>Giá sản phẩm</th>
+                                                            <th>Thao tác</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="table-group-divider">
+                                                        <tr class="table-primary">
+                                                            <td scope="row"><input type="text" value="25cm"
+                                                                    class="form-control">
+                                                            </td>
+                                                            <td><input type="text" class="form-control" value="Xanh">
+                                                            </td>
+                                                            <td><input type="text" class="form-control" value="100">
+                                                            </td>
+                                                            <td><input type="text" class="form-control"
+                                                                    value="500,000đ"></td>
+                                                            <td class="handle">
+                                                                <button class="">Sửa</button>
+                                                                <a href="" class="text-secondary"><i
+                                                                        class="fa-solid fa-trash "></i></a>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+                                                    <tfoot>
+
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 classify">
+                                    <span><b>Phân loại</b></span>
+                                    <div class="mb-3">
+                                        <label for="type" class="form-label">Loại</label>
+                                        <input type="text" name="" id="type" class="form-control" value="Gấu bông"
+                                            placeholder="" aria-describedby="helpId">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="supplier" class="form-label">Nhà cung cấp</label>
+                                        <input type="text" name="" id="supplier" class="form-control" value="Hentai"
+                                            placeholder="" aria-describedby="helpId">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="cat-product" class="form-label">Danh mục</label>
+                                        <select class="form-select form-select" name="" id="">
+                                            <option selected>Đồ điện tử</option>
+                                            <option value="">Đồ chơi</option>
+                                            <option value="">Phụ kiện</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 complete">
+                                    <button class="btn btn-danger">Xóa sản phẩm</button>
+                                    <button class="btn btn-primary">Cập nhật</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- -----------------------End-Content------------------- -->
+
+            </div>
+            <form action="">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Gửi góp ý</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="s-feedback">Mục góp ý<b class="text-danger">*</b></label>
+                                    <select class="form-control" name="" id="s-feedback">
+                                        <option value="">Lựa chọn mục góp ý</option>
+                                        <option value="">Báo lỗi-Chỉnh sửa giao diện web</option>
+                                        <option value="">Góp ý phản ánh dịch vụ</option>
+                                        <option value="">Tư vấn thiết kế website</option>
+                                        <option value="">Hỗ trợ vấn đề khác</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="title">Tiêu đề<b class="text-danger">*</b></label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="content-feedback">Nội dung<b class="text-danger">*</b></label>
+                                    <textarea class="form-control" name="" id="content-feedback" cols=""
+                                        rows="5"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="file"><i class="fa-solid fa-paperclip"></i> Đính kèm tệp</label>
+                                    <input type="file" id="file" class="form-control">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                <button type="button" class="btn btn-primary">Gửi yêu cầu</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+            <script src="https://<hostname.tld>/tinymce.min.js" referrerpolicy="origin"></script>
+            <script
+                src="https://cdn.tiny.cloud/1/zv8smycynpxe65kgxso06aogcisyy9so3bx4r99svhe4vrqm/tinymce/6/tinymce.min.js"
+                referrerpolicy="origin"></script>
+            <script src="js/index.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"
+                integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
+                integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
+                crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+
+                const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+                const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+                popoverTriggerList.forEach(function (popoverTriggerEl) {
+                    popoverTriggerEl.addEventListener('click', function () {
+                        // ẩn tất cả các popover khác
+                        popoverList.forEach(function (popover) {
+                            if (popover._element !== popoverTriggerEl) {
+                                popover.hide()
+                            }
+                        })
+                    })
+                })
+                tinymce.init({
+                    selector: 'textarea#description',
+                    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+                    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+                    image_title: true,
+                    automatic_uploads: true,
+                    file_picker_types: 'image',
+                    file_picker_callback: function (cb, value, meta) {
+                        var input = document.createElement('input');
+                        input.setAttribute('type', 'file');
+                        input.setAttribute('accept', 'image/*');
+                        input.onchange = function () {
+                            var file = this.files[0];
+                            var reader = new FileReader();
+
+                            reader.onload = function () {
+                                var id = 'blobid' + (new Date()).getTime();
+                                var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                                var base64 = reader.result.split(',')[1];
+                                var blobInfo = blobCache.create(id, file, base64);
+                                blobCache.add(blobInfo);
+                                cb(blobInfo.blobUri(), { title: file.name });
+                            };
+                            reader.readAsDataURL(file);
+                        };
+                        input.click();
+                    }
+                });
+
+            </script>
+
+</body>
+
+</html>

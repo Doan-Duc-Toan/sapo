@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/fontawesome/css/all.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/product-detail.css">
+    <script src="js/jquery.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="header">
+            <div id="top-header" class="">
+                <div class="" id="logo">
+                    <a href="#"><img src="img/logo-sapo-02.png" alt=""></a>
+                </div>
+                <div class="center" id="search">
+                    <form action="" class="row">
+                        <input type="text" placeholder="Nhập từ khóa tìm kiếm" class="col-md-10">
+                        <button class="col-md-2"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                </div>
+                <div class="" id="contact">
+                    <a href=""><i class="center fa-solid fa-phone fa-bounce"></i><span>Gọi mua hàng <br>
+                            <b>0911577985</b></span> </a>
+                </div>
+                <div class="" id="access">
+                    <i class="center fa-solid fa-circle-user"></i>
+                    <div>
+                        <a href="">Đăng nhập</a>
+                        <a href="">Đăng ký</a>
+                    </div>
+                </div>
+                <div id="feedback" class="center">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    <a href=""><span>Góp ý</span></a>
+                </div>
+                <div class="" id="cart">
+                    <div class="center">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                        <span class="count center">5</span>
+                    </div>
+                    <a href="">Giỏ hàng</a>
+                </div>
+            </div>
+            <div id="nav">
+                <ul class="nav-p">
+                    <li class="nav-item-p"><a href="">Điện thoại <i class="fa-solid fa-caret-down"></i></a>
+                        <ul class="nav-c row">
+                            <li class="col-md-4 nav-item-c text-light"><b>Chọn theo hãng</b>
+                                <ul class="nav-cc">
+                                    <li><a href="">Apple</a></li>
+                                    <li><a href="">Samsung</a></li>
+                                    <li><a href="">Oppo</a></li>
+                                </ul>
+                            </li>
+                            <li class="col-md-4 nav-item-c text-light"><b>Chọn theo giá sản phẩm</b>
+                                <ul class="nav-cc">
+                                    <li><a href="">Nhỏ hơn 10 triệu</a></li>
+                                    <li><a href="">Từ 10 triệu đến 20 triệu</a></li>
+                                    <li><a href="">Từ 20 triệu đến 30 triệu</a></li>
+                                    <li><a href="">Lớn hơn 30 triệu</a></li>
+                                </ul>
+                            </li>
+                            <li class="col-md-4 nav-item-c text-light"><b>Loại điện thoại</b>
+                                <ul class="nav-cc">
+                                    <li><a href="">Android</a></li>
+                                    <li><a href="">IOS</a></li>
+                                    <li><a href="">Điện thoại phổ thông</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item-p"><a href="">Laptop <i class="fa-solid fa-caret-down"></i></a>
+                        <ul class="row nav-c n-nav-cc">
+                            <li class="col-md-12 py-2"><a href="">Markbook</a></li>
+                            <li class="col-md-12 py-2"><a href="">Sinh viên</a></li>
+                            <li class="col-md-12 py-2"><a href="">Gaming</a></li>
+                            <li class="col-md-12 py-2"><a href="">Văn phòng</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item-p"><a href="">Loa</a></li>
+                    <li class="nav-item-p"><a href="">Đồng hồ</a></li>
+                    <li class="nav-item-p"><a href="">Phụ kiện <i class="fa-solid fa-caret-down"></i></a>
+                        <ul class="row nav-c n-nav-cc">
+                            <li class="col-md-12 py-2"><a href="">Phụ kiện di động</a></li>
+                            <li class="col-md-12 py-2"><a href="">Phụ kiện laptop</a></li>
+                            <li class="col-md-12 py-2"><a href="">Phụ kiện gaming</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item-p"><a href="">Máy Pc</a></li>
+                    <li class="nav-item-p"><a href="">Máy cũ giá rẻ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="" id="wr-content">
+            <nav id="breadcrumb-nav" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="">Điện thoại</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Samsung Galaxy S22</li>
+                    <!-- <li class="breadcrumb-item active" aria-current="page">Data</li> -->
+                </ol>
+            </nav>
+            <div id="content">
+                <span class="product-name">SamSung Galaxy S22 128GB 5G</span>
+                <div id="product-detail">
+                    <div id="product-main-slide">
+                        <div class="img-main">
+                            <img src="img/m1.webp" alt="">
+                            <span class="pre move center"><i class="fa-solid fa-chevron-left"></i></span>
+                            <span class="next move center"><i class="fa-solid fa-chevron-left"></i></span>
+                        </div>
+                        <div class="list-img">
+                            <div class="img-item img-active">
+                                <img src="img/m1.webp" alt="">
+                            </div>
+                            <div class="img-item">
+                                <img src="img/m2.webp" alt="">
+                            </div>
+                            <div class="img-item">
+                                <img src="img/m3.webp" alt="">
+                            </div>
+                            <div class="img-item">
+                                <img src="img/m4.webp" alt="">
+                            </div>
+                            <div class="img-item">
+                                <img src="img/m5.webp" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="product-detail-right">
+                        <div class="price">
+                            <span class="new-price">29.900.000đ</span>
+                            <span class="old-price">37.900.000đ</span>
+                        </div>
+                        <form action="">
+                            <div class="color">
+                                <span class="c-title">Màu sắc</span>
+                                <div class="list-color">
+                                    <div class="color-item c-active">
+                                        <img src="img/m1.webp" alt="">
+                                        <span class="mark-icon">✓</span>
+                                        <input type="radio" value="" id="red">
+                                        <label for="red">Đỏ</label>
+                                    </div>
+                                    <div class="color-item ">
+                                        <img src="img/m2.webp" alt="">
+                                        <input type="radio" value="" id="blue">
+                                        <label for="blue">Xanh</label>
+                                        <span class="mark-icon">✓</span>
+                                    </div>
+                                    <div class="color-item">
+                                        <img src="img/m3.webp" alt="">
+                                        <input type="radio" value="yellow" id="yellow">
+                                        <label for="yellow">Vàng</label>
+                                        <span class="mark-icon">✓</span>
+                                    </div>
+                                    <div class="color-item">
+                                        <img src="img/m4.webp" alt="">
+                                        <span class="mark-icon">✓</span>
+                                        <input type="radio" value="black" id="black">
+                                        <label for="black">Đen</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="count">
+                                <span class="center c-title">Số lượng</span>
+                                <span class="sub num center no-select">-</span>
+                                <span class="add num center no-select">+</span>
+                                <input type="number" min="1" value="1">
+                            </div>
+                            <div class="buy">
+                                <button class="buy-now">MUA NGAY<br> <span>(Giao tận nơi hoặc lấy tại cửa
+                                        hàng)</span></button>
+                                <a href="" class="add-cart"><i class="fa-solid fa-cart-shopping center"></i><span>Thêm
+                                        vào giỏ</span></a>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="product-detail-bot">
+                        <span><b>Thông tin chi tiết</b></span>
+                        <p> Đúng như các thông tin được đồn đoán trước đó, mẫu flagship mới của gả khổng lồ Hàn Quốc
+                            được ra
+                            mắt với tên gọi là Samsung Galaxy S22 Ultra với nhiều cải tiến đáng giá. Mẫu điện thoại cao
+                            cấp
+                            đến từ Samsung này có nhiều thay đổi từ thiết kế, cấu hình cho đến camera. Vậy siêu phẩm này
+                            có
+                            gì mới, giá bao nhiêu và có nên mua không? Hãy cùng tìm hiểu chi tiết ngay bên dưới nhé!</p>
+                        <h3 class="text-danger">Đánh giá Samsung Galaxy S22 Ultra 5G chi tiết</h3>
+                        <p>Những nâng cấp lớn về hiệu năng, dung lượng pin, và trên hết là camera sau chính
+                            là những điểm khiến nó trở thành siêu phẩm trong phân khúc cao cấp. Dưới đây là
+                            những thông tin cần biết về dòng điện thoại vừa ra mắt của Samsung. Dưới đây là thông số cấu
+                            hình của Samsung S22 Ultra vừa được gã khổng lồ Hàn Quốc giới thiệu.</p>
+                        <span><b>Thiết kế nguyên khối - kính sang trọng với độ bền tối ưu</b></span>
+                        <p>Samsung Galaxy S22 Ultra đi theo ngôn ngữ thiết kế nguyên khối - kính cao cấp và sang
+                            trọng, vốn đã làm nên sự thành công của model tiền nhiệm. Chiếc máy có thiết
+                            kế mặt lưng đơn sắc tối giản nhưng không kém phần tinh tế, và màn hình tràn
+                            viền bao phủ gần như trọn mặt trước, tạo nên trải nghiệm quan sát rộng rãi trên
+                            một thiết bị di động nhỏ gọn vừa tay cầm.
+
+                            Độ bền của máy được đảm bảo tối ưu không chỉ qua lớp vỏ nhôm nguyên khối Amor
+                            đánh bóng, mà còn qua kính cường lực Corning Gorilla Glass Victus+ bao phủ hai mặt
+                            trước và sau. Khung nhôm và kính hoạt động như bộ giáp bảo vệ điện thoại an toàn. Chiếc
+                            máy còn có khả năng chống bụi / nước đạt chuẩn IP68 giúp người dùng luôn an tâm
+                            khi dùng máy trong những điều kiện môi trường khác nhau.</p>
+                        <span><b>Ống kính 108MP mang lại khả năng chụp ảnh không giới hạn</b></span>
+
+                        <p>Ống kính chính trên Samsung S22 Ultra với độ phân giải lên đến 108MP, với những khả năng
+                            chụp ảnh đêm, chụp chân dung, chụp góc siêu rộng, và zoom quang học 100x đều hiện
+                            diện. Chi tiết ảnh và màu sắc tốt nằm trong khoảng zoom 10x, có thể sử dụng zoom 30x trong
+                            điều kiện ánh sáng tốt, còn zoom 100x mang tính chất lưu lại thông tin. Camera chính và
+                            camera tele hỗ trợ công nghệ chống rung quang học OIS.
+
+                            Cụm camera sau cho phép người dùng sáng tạo ảnh chụp của mình không giới hạn.
+                            Hai ống kính còn lại là ống kính 12MP hỗ trợ chụp góc siêu rộng và ống kính tele 10MP. Người
+                            dùng có thể sử dụng S22 chụp ảnh macro với ống kính siêu rộng. Màu sắc và chi tiết ảnh cao
+                            hơn các model tầm trung, cho độ phân giải và cảm biến tốt hơn.
+
+                            Thiết bị được trang bị khả năng chụp ảnh chân dung ban đêm, trong điều kiện thiếu sáng ấn
+                            tượng với bộ xử lý hình ảnh AI kết hợp với camera góc rộng 108MP mang lại bức ảnh ban đêm
+                            sáng rõ. Với không gian không quá tối, chỉ với thao tác sử dụng chế độ tự động, AI sẽ tự xử
+                            lý cho ra hình ảnh sáng, đầy đủ chi tiết và không bị nhiễu. Trường hợp thiếu sáng, chế độ
+                            chụp đêm là sự lựa chọn hoàn hảo.
+
+                            Tốc độ khung hình phát hiện ánh sáng và tự động chuyển sang tốc độ khung hình tối ưu.
+                            Samsung Galaxy S22 Ultra sử dụng bộ xử lý 4nm với công nghệ Super Night Solution giảm nhiễu
+                            hiệu quả.
+
+                            Đồng thời, người dùng có thể điều chỉnh được mức độ xóa phông sau khi chụp. Khi thực hiện
+                            quay video cần hiệu chỉnh phần hậu cảnh, người dùng có thể làm nổi bật chủ thể bằng cách sử
+                            dụng bộ lọc đổi phông thành đen trắng. Phần chuyển nét mượt mà và không có cảm giác bị lẹm.
+
+                            Không chỉ chụp ảnh, thiết bị còn mang lại khả năng quay phim chất lượng với khả năng chống
+                            rung và công nghệ AI mang lại những thước phim chuyển động nhanh mà vẫn đảm bảo rõ nét, zoom
+                            tốt hơn. Điện thoại còng được trang bị công nghệ Super HDR tốt với tất cả các ống kính mang
+                            lại những thước phim giàu chi tiết. Ấn tượng nhất trên camera của Samsung S22 Ultra đó chính
+                            là khả năng thu phóng 100 lần đầy ấn tượng.
+
+                            Phía trước máy là camera selfie đơn với độ phân giải lên đến 40 MP, khẩu độ f/2.2 với
+                            khả năng chụp góc rộng cho ra ảnh chụp selfie bắt mắt. Tính năng làm đẹp AI, gọi
+                            video call kép và HDR tự động sẽ giúp tăng cường trải nghiệm chụp ảnh trên chiếc
+                            flagship này.
+
+                            Điểm nổi bật nữa của cụm camera nằm ở thời gian phơi sáng đến 6 giây nhưng bị rung nhòe kể
+                            cả không sử dụng chân đế!</p><br><br>
+
+                        <div class="after"></div>
+                        <span class="see-more">Xem tất cả</span>
+                        <span class="btn-collapse">Thu gọn</span>
+                    </div>
+                </div>
+                <div id="specifications">
+                    <div class="advise">
+                        <img src="img/advice.webp" alt="">
+                        <span class="phone">Gọi ngay <span class="text-danger"><b>0911577985</b></span> để được tư
+                            vấn</span>
+                    </div>
+                    <div class="status">
+                        <span>Tình trạng: <span class="text-success"><b>Còn hàng</b></span></span>
+                        <span>Thương hiệu: <span class="text-success"><b>Samsung</b></span></span>
+                        <span>Loại: <span class="text-success"><b>Android</b></span></span>
+                    </div>
+                    <div class="sc-main">
+                        <span class="sc-title">Thông số kỹ thuật</span>
+                        <div class="sc-table">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2" class="sc-item">Màn hình</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Công nghệ màn hình</td>
+                                        <td>Dynamic AMOLED 2X</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Độ phân giải</td>
+                                        <td>1440 x 3088 pixels (QHD+)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Màn hình rộng</td>
+                                        <td>6.8 Inches</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tính năng màn hình</td>
+                                        <td>Tần số quét 120Hz <br>
+                                            Công nghệ HDR10+</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="sc-detail center">
+                            <span data-bs-toggle="modal" data-bs-target="#modalId">
+                                Chi tiết cấu hình
+                            </span>
+                        </div>
+
+
+                        <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static"
+                            data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm"
+                                role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalTitleId">Cấu hình chi tiết</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="2" class="sc-item">Màn hình</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Công nghệ màn hình</td>
+                                                    <td>Dynamic AMOLED 2X</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Độ phân giải</td>
+                                                    <td>1440 x 3088 pixels (QHD+)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Màn hình rộng</td>
+                                                    <td>6.8 Inches</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tính năng màn hình</td>
+                                                    <td>Tần số quét 120Hz <br>
+                                                        Công nghệ HDR10+</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="sc-item">Camera sau</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Độ phân giải</td>
+                                                    <td>108 MP, f/1.8 góc rộng <br>
+                                                        10 MP, f/4.9 <br>
+                                                        10 MP, f/2.4 <br>
+                                                        12 MP, f/2.2 góc siêu rộng</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Quay phim</td>
+                                                    <td>8K@24fps, 4K@30/60fps, <br> 1080p@30/60/240fps, 720p@960fps, <br> HDR10+</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Đèn flash</td>
+                                                    <td>Có</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tính năng</td>
+                                                    <td>Góc rộng <br>
+                                                        Góc siêu rộng <br>
+                                                        HDR <br>
+                                                        Lấy nét theo pha (PDAF) <br>
+                                                        Siêu cận <br>
+                                                        Toàn cảnh <br>
+                                                        Xóa phông</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="sc-item">Camera trước</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Độ phân giải</td>
+                                                    <td>40 MP, f/2.2</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Quay phim</td>
+                                                    <td>4K@30/60fps, 1080p@30fps</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Đèn flash</td>
+                                                    <td>Có</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Tính năng</td>
+                                                    <td>Góc rộng <br>
+                                                        Góc siêu rộng <br>
+                                                        HDR <br>
+                                                        Lấy nét theo pha (PDAF) <br>
+                                                        Siêu cận <br>
+                                                        Toàn cảnh <br>
+                                                        Xóa phông</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="sc-item">Hệ điều hành</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        OS</td>
+                                                    <td>Android 12, One UI 4.1</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>CPU</td>
+                                                    <td>Octa-core (1x3.00 GHz Cortex-X2 & 3x2.50 GHz Cortex-A710 & 4x1.80 GHz Cortex-A510)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Chipset</td>
+                                                    <td>Qualcomm Snapdragon 8 Gen 1 (4 nm)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>GPU</td>
+                                                    <td>Adreno 730</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Optional: Place to the bottom of scripts -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <div class="row" id="top-footer">
+                <div class="col-md-6 row" id="shop-contact">
+                    <div class="col-md-12 shop-logo">
+                        <a href="#"><img src="img/logo-sapo-01.png" alt=""></a>
+                    </div>
+                    <div class="col-md-12 contact-detail">
+                        <b>Trụ sở chính:</b> <span class="text-secondary"> Ladeco Building, 266 Doi Can Street, Ba Dinh
+                            District, Hanoi </span><br>
+                        <b>Email:</b> <a class="text-secondary" href="">support@sapo.vn</a><br>
+                        <b>Hotline:</b> <a class="text-secondary" href="">1900 6750</a> <br>
+                        <span class="text-secondary">Giấy chứng nhận Đăng ký Kinh doanh số 0309532xxx do Sở Kế hoạch và
+                            Đầu tư Thành phố Hà Nội cấp ngày
+                            01/04/2002</span>
+                    </div>
+                </div>
+                <div class="col-md-2" id="policy">
+                    <h4>Chính sách</h4>
+                    <ul>
+                        <li><a href="">Chính sách mua hàng</a></li>
+                        <li><a href="">Chính sách đổi trả</a></li>
+                        <li><a href="">Chính sách bảo hành</a></li>
+                        <li><a href="">Gửi góp ý, khiếu nại</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4" id="connect-with">
+                    <h4>Kết nối với chúng tôi</h4>
+                    <div class="d-flex" id="con-icon">
+                        <div class="icon-item center"><a href=""><img
+                                    src="img/50-Best-Facebook-Logo-Icons-GIF-Transparent-PNG-Images-28.png" alt=""></a>
+                        </div>
+                        <div class="icon-item center"><a href=""><img src="img/Instagram-Logo-1024x982.png" alt=""></a>
+                        </div>
+                        <div class="icon-item center"><a href=""><img src="img/cricle-twitter-emblem-png-clipart-8.png"
+                                    alt=""></a></div>
+                        <div class="icon-item center"><a href=""><img src="img/official-youtube-icon-28.png" alt=""></a>
+                        </div>
+                        <div class="icon-item center"><a href=""><img
+                                    src="img/shopee-circle-logo-design-shopping-bag-13.png" alt=""></a></div>
+                        <div class="icon-item center"><a href=""><img src="img/Instagram-Logo-1024x982.png" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="bot-footer">
+                <div class="col-md-2">
+                    <ul>
+                        <li><a href="">Điện thoại</a></li>
+                        <li><a href="">Tai nghe</a></li>
+                        <li><a href="">Chuột</a></li>
+                        <li><a href="">Loa</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <ul>
+                        <li><a href="">Smart watch</a></li>
+                        <li><a href="">Bàn phím</a></li>
+                        <li><a href="">Pin dự phòng</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <ul>
+                        <li><a href="">Laptop</a></li>
+                        <li><a href="">Tai nghe</a></li>
+                        <li><a href="">Cáp, củ sạc</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <ul>
+                        <li><a href="">Máy tính bảng</a></li>
+                        <li><a href="">Ốp lưng, bao da</a></li>
+                        <li><a href="">Màn hình</a></li>
+                        <li><a href="">Camera, webcam</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <ul>
+                        <li><a href="">Phụ kiện gamming</a></li>
+                        <li><a href="">Tivi</a></li>
+                        <li><a href="">Camera, webcam</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <ul>
+                        <li><a href="">Màn hình</a></li>
+                        <li><a href="">Máy quét mã vạch</a></li>
+                        <li><a href="">Thiết bị mạng</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const myModal = new bootstrap.Modal(document.getElementById('modalId'), options)
+
+</script>
+<script>
+
+    $(document).ready(function () {
+        $(".list-img .img-item").click(function () {
+            $(".list-img .img-item").removeClass("img-active");
+            var src = $(this).children("img").attr("src");
+            $(".img-main img").fadeOut(200, function () {
+                $(this).attr("src", src).fadeIn(200);
+            })
+            $(this).addClass("img-active");
+        })
+        $(".color-item").click(function () {
+            $(".color-item").removeClass("c-active");
+            var src = $(this).children("img").attr("src");
+            $(".list-img .img-item").removeClass("img-active");
+            var acvite = $('.list-img .img-item').find("img[src ='" + src + "']").parent().addClass("img-active");
+            $(".img-main img").fadeOut(200, function () {
+                $(this).attr("src", src).fadeIn(200);
+            })
+            $("input[type='radio']").prop("checked", false);
+            $(this).children("input[type='radio']").prop("checked", true)
+            $(this).addClass("c-active");
+        })
+        $('.next').click(function () {
+            var src = $('.list-img .img-item.img-active').next().children('img').attr("src");
+            var next = $('.list-img .img-item.img-active').next()
+            if (next.length != 0) {
+                $(".list-img .img-item").removeClass("img-active");
+                $(next).addClass("img-active");
+                $(".img-main img").fadeOut(200, function () {
+                    $(this).attr("src", src).fadeIn(200);
+                })
+            }
+        })
+        $('.pre').click(function () {
+            var src = $('.list-img .img-item.img-active').prev().children('img').attr("src");
+            var pre = $('.list-img .img-item.img-active').prev()
+            if (pre.length != 0) {
+                $(".list-img .img-item").removeClass("img-active");
+                $(pre).addClass("img-active");
+                $(".img-main img").fadeOut(200, function () {
+                    $(this).attr("src", src).fadeIn(200);
+                })
+            }
+        })
+        $('.add').click(function () {
+            var val = $("input[type='number']").val();
+            parseInt(val)
+            val++;
+            $("input[type='number']").val(val)
+        })
+        $('.sub').click(function () {
+            var val = $("input[type='number']").val();
+            parseInt(val)
+            val--;
+            if (val >= 1) { $("input[type='number']").val(val) }
+        })
+        $(".see-more").click(function () {
+            $("#product-detail-bot").css('height', 'auto');
+            $("#product-detail-bot div.after").css('background', 'none');
+            $(this).css('display', 'none');
+            $('.btn-collapse').css('display', 'inline');
+        })
+        $(".btn-collapse").click(function () {
+            $("#product-detail-bot").css('height', '400px');
+            $("#product-detail-bot div.after").css('background', 'linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%)');
+            $(this).css('display', 'none');
+            $('.see-more').css('display', 'inline');
+        })
+    })
+</script>
+
+</html>
