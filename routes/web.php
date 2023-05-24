@@ -9,8 +9,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CatController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
-
-
+use App\Http\Controllers\ClientCustomerController;
+use App\Http\Controllers\ClientController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,3 +71,10 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/order/detail/{id}', [OrderController::class, 'detail'])->name('order.detail');
 
 });
+Route::get('sapo/login', [ClientCustomerController::class, 'login'])->name('client.login');
+Route::get('sapo/register', [ClientCustomerController::class, 'register'])->name('client.register');
+Route::get('sapo',[ClientController::class,'index'])->name('client.index');
+Route::post('sapo/register/handle', [ClientCustomerController::class, 'register_handle'])->name('client.register_handle');
+Route::post('sapo/login/handle', [ClientCustomerController::class, 'login_handle'])->name('client.login_handle');
+Route::get('sapo/logout', [ClientCustomerController::class, 'logout'])->name('client.logout');
+
