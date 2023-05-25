@@ -77,4 +77,5 @@ Route::get('sapo',[ClientController::class,'index'])->name('client.index');
 Route::post('sapo/register/handle', [ClientCustomerController::class, 'register_handle'])->name('client.register_handle');
 Route::post('sapo/login/handle', [ClientCustomerController::class, 'login_handle'])->name('client.login_handle');
 Route::get('sapo/logout', [ClientCustomerController::class, 'logout'])->name('client.logout');
+Route::get('sapo/product/{name}/{id}',[ClientController::class, 'detail'])->name('c_product.detail');
 

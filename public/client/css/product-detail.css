@@ -155,7 +155,11 @@ span.product-name {
     font-weight: 700;
     color: #4c4c4c;
 }
-
+ h4{
+    font-size: 16px;
+    font-weight: 600;
+    color: #d70018 !important;
+}
 #product-detail-right form .color {
     flex-basis: 100%;
     max-width: 500px;

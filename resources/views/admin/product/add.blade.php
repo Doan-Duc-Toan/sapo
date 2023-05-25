@@ -109,7 +109,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="specifications" class="form-label">Thông số kỹ thuật</label>
-                        <textarea name="specifications" class="form-control" placeholder="Nhập thông số kỹ thuật cho sản phẩm" id="specifications" cols="" rows="30"></textarea>
+                        <textarea name="specifications" class="form-control" placeholder="Nhập thông số kỹ thuật cho sản phẩm"
+                            id="specifications" cols="" rows="30"></textarea>
                         @error('specifications')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
@@ -170,43 +171,6 @@
     <script>
         var editor_config = {
             path_absolute: "http://localhost/SapoShop/public/",
-            selector: 'textarea#description',
-            relative_urls: false,
-            plugins: [
-                "advlist autolink lists link image charmap print preview hr anchor pagebreak",
-                "searchreplace wordcount visualblocks visualchars code fullscreen",
-                "insertdatetime media nonbreaking save table directionality",
-                "emoticons template paste textpattern"
-            ],
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
-            file_picker_callback: function(callback, value, meta) {
-                var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName(
-                    'body')[0].clientWidth;
-                var y = window.innerHeight || document.documentElement.clientHeight || document
-                    .getElementsByTagName('body')[0].clientHeight;
-
-                var cmsURL = editor_config.path_absolute + 'laravel-filemanager?editor=' + meta.fieldname;
-                if (meta.filetype == 'image') {
-                    cmsURL = cmsURL + "&type=Images";
-                } else {
-                    cmsURL = cmsURL + "&type=Files";
-                }
-
-                tinyMCE.activeEditor.windowManager.openUrl({
-                    url: cmsURL,
-                    title: 'Filemanager',
-                    width: x * 0.8,
-                    height: y * 0.8,
-                    resizable: "yes",
-                    close_previous: "no",
-                    onMessage: (api, message) => {
-                        callback(message.content);
-                    }
-                });
-            }
-        };
-        var editor_config = {
-            path_absolute: "http://localhost/SapoShop/public/",
             selector: 'textarea#specifications',
             relative_urls: false,
             plugins: [
@@ -243,5 +207,45 @@
             }
         };
         tinymce.init(editor_config);
+    </script>
+    <script>
+        var editor_configs = {
+            path_absolute: "http://localhost/SapoShop/public/",
+            selector: 'textarea#description',
+            relative_urls: false,
+            plugins: [
+                "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+                "searchreplace wordcount visualblocks visualchars code fullscreen",
+                "insertdatetime media nonbreaking save table directionality",
+                "emoticons template paste textpattern"
+            ],
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media",
+            file_picker_callback: function(callback, value, meta) {
+                var x = window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName(
+                    'body')[0].clientWidth;
+                var y = window.innerHeight || document.documentElement.clientHeight || document
+                    .getElementsByTagName('body')[0].clientHeight;
+
+                var cmsURL = editor_config.path_absolute + 'laravel-filemanager?editor=' + meta.fieldname;
+                if (meta.filetype == 'image') {
+                    cmsURL = cmsURL + "&type=Images";
+                } else {
+                    cmsURL = cmsURL + "&type=Files";
+                }
+
+                tinyMCE.activeEditor.windowManager.openUrl({
+                    url: cmsURL,
+                    title: 'Filemanager',
+                    width: x * 0.8,
+                    height: y * 0.8,
+                    resizable: "yes",
+                    close_previous: "no",
+                    onMessage: (api, message) => {
+                        callback(message.content);
+                    }
+                });
+            }
+        };
+        tinymce.init(editor_configs);
     </script>
 @endsection

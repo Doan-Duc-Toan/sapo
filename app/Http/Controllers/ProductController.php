@@ -39,7 +39,7 @@ class ProductController extends Controller
             'price' => 'required|integer',
             'type' => 'required|string',
             'supplier' => 'required|string',
-            'specifications' => 'required|string',
+            'specifications' => 'string|nullable',
             // 'salient_features' => 'required|string',
 
         ]);
@@ -89,7 +89,7 @@ class ProductController extends Controller
                 'price' => 'required|integer',
                 'type' => 'required|string',
                 'supplier' => 'required|string',
-                'specifications' => 'required|string',
+                'specifications' => 'string|nullable',
                 // 'salient_features' => 'required|string',
             ]);
             $product->update([
