@@ -14,6 +14,7 @@ class Customer extends Authenticatable
         'fullname',
         'email',
         'phone',
-        'password'  
+        'password',
+        'draft_order'
     ];
 }

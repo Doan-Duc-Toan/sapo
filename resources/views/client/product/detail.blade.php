@@ -4,9 +4,10 @@
     <link rel="stylesheet" href="{{ asset('client/css/product-detail.css') }}">
     <nav id="breadcrumb-nav" aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
-            <li class="breadcrumb-item"><a href="">Điện thoại</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Samsung Galaxy S22</li>
+            <li class="breadcrumb-item"><a href="{{ route('client.index') }}"><i class="fa-solid fa-house"></i> Trang chủ</a>
+            </li>
+            <li class="breadcrumb-item"><a href="#">{{ $product->type }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $product->name }}</li>
             <!-- <li class="breadcrumb-item active" aria-current="page">Data</li> -->
         </ol>
     </nav>
@@ -27,10 +28,10 @@
                     $count = 1;
                 @endphp
                 @foreach ($product->thumbs as $thumb)
-                    <div class="img-item @php
-                        if($count == 1 ) echo 'img-active';
-                        $count = 0;
-                    @endphp">
+                    <div
+                        class="img-item @php
+if($count == 1 ) echo 'img-active';
+                        $count = 0; @endphp">
                         <img src="{{ asset($thumb->link) }}" alt="">
                     </div>
                 @endforeach
@@ -41,19 +42,26 @@
                 <span class="new-price">{{ number_format($product->price * 0.91, 0, '.', ',') . ' đ' }}</span>
                 <span class="old-price">{{ number_format($product->price, 0, '.', ',') . ' đ' }}</span>
             </div>
-            <form action="">
+            <form action="{{ route('client.cart_act', $product->id) }}" method="POST">
+                @csrf
                 <div class="color">
                     <span class="c-title">Màu sắc</span>
                     <div class="list-color">
+                        @php
+                            $count = 1;
+                        @endphp
                         @foreach ($product->thumbs as $thumb)
                             @if ($thumb->color_id)
                                 @php
                                     $color = App\Models\Color::find($thumb->color_id);
                                 @endphp
-                                <div class="color-item">
+                                <div class="color-item @php
+if($count == 1 ) echo 'c-active'; @endphp">
                                     <img src="{{ asset($thumb->link) }}" alt="">
                                     <span class="mark-icon">✓</span>
-                                    <input type="radio" value="" id="{{ $color->id }}">
+                                    <input type="radio" name="color" @php
+if($count == 1 ) echo 'checked'; $count = 0; @endphp
+                                        value="{{ $color->id }}" id="{{ $color->id }}">
                                     <label for="{{ $color->id }}">{{ $color->name }}</label>
                                 </div>
                             @endif
@@ -64,13 +72,15 @@
                     <span class="center c-title">Số lượng</span>
                     <span class="sub num center no-select">-</span>
                     <span class="add num center no-select">+</span>
-                    <input type="number" min="1" value="1">
+                    <input type="number" name="count" min="1" value="1">
                 </div>
                 <div class="buy">
-                    <button class="buy-now">MUA NGAY<br> <span>(Giao tận nơi hoặc lấy tại cửa
+                    <button name="btn_act" value="buy" class="buy-now">MUA NGAY<br> <span>(Giao tận nơi hoặc lấy tại
+                            cửa
                             hàng)</span></button>
-                    <a href="" class="add-cart"><i class="fa-solid fa-cart-shopping center"></i><span>Thêm
-                            vào giỏ</span></a>
+                    <button name="btn_act" value="add_cart" class="add-cart"><i
+                            class="fa-solid fa-cart-shopping center"></i><span>Thêm
+                            vào giỏ</span></button>
                 </div>
             </form>
         </div>
@@ -84,42 +94,23 @@
     </div>
     <div id="specifications">
         <div class="advise">
-            <img src="img/advice.webp" alt="">
+            <img src="{{ asset('client/img/advice.webp') }}" alt="">
             <span class="phone">Gọi ngay <span class="text-danger"><b>0911577985</b></span> để được tư
                 vấn</span>
         </div>
         <div class="status">
-            <span>Tình trạng: <span class="text-success"><b>Còn hàng</b></span></span>
-            <span>Thương hiệu: <span class="text-success"><b>Samsung</b></span></span>
-            <span>Loại: <span class="text-success"><b>Android</b></span></span>
+            <span>Tình trạng: @if ($product->count > 0)
+                    <span class="text-success"><b>Còn hàng</b></span>
+                @else
+                    <span class="text-secondary"><b>Hết hàng</b></span>
+                @endif
+            </span>
+            <span>Thương hiệu: <span class="text-success"><b>{{ ucfirst($product->supplier) }}</b></span></span>
+            <span>Loại: <span class="text-success"><b>{{ $product->type }}</b></span></span>
         </div>
         <div class="sc-main">
             <span class="sc-title">Thông số kỹ thuật</span>
             <div class="sc-table">
-                {{-- <table>
-                    <tbody>
-                        <tr>
-                            <td colspan="2" class="sc-item">Màn hình</td>
-                        </tr>
-                        <tr>
-                            <td>Công nghệ màn hình</td>
-                            <td>Dynamic AMOLED 2X</td>
-                        </tr>
-                        <tr>
-                            <td>Độ phân giải</td>
-                            <td>1440 x 3088 pixels (QHD+)</td>
-                        </tr>
-                        <tr>
-                            <td>Màn hình rộng</td>
-                            <td>6.8 Inches</td>
-                        </tr>
-                        <tr>
-                            <td>Tính năng màn hình</td>
-                            <td>Tần số quét 120Hz <br>
-                                Công nghệ HDR10+</td>
-                        </tr>
-                    </tbody>
-                </table> --}}
                 {!! $product->specifications !!}
             </div>
             <div class="sc-detail center">
@@ -139,107 +130,6 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            {{-- <table>
-                                <tbody>
-                                    <tr>
-                                        <td colspan="2" class="sc-item">Màn hình</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Công nghệ màn hình</td>
-                                        <td>Dynamic AMOLED 2X</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Độ phân giải</td>
-                                        <td>1440 x 3088 pixels (QHD+)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Màn hình rộng</td>
-                                        <td>6.8 Inches</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tính năng màn hình</td>
-                                        <td>Tần số quét 120Hz <br>
-                                            Công nghệ HDR10+</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" class="sc-item">Camera sau</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Độ phân giải</td>
-                                        <td>108 MP, f/1.8 góc rộng <br>
-                                            10 MP, f/4.9 <br>
-                                            10 MP, f/2.4 <br>
-                                            12 MP, f/2.2 góc siêu rộng</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Quay phim</td>
-                                        <td>8K@24fps, 4K@30/60fps, <br> 1080p@30/60/240fps, 720p@960fps, <br> HDR10+
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Đèn flash</td>
-                                        <td>Có</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tính năng</td>
-                                        <td>Góc rộng <br>
-                                            Góc siêu rộng <br>
-                                            HDR <br>
-                                            Lấy nét theo pha (PDAF) <br>
-                                            Siêu cận <br>
-                                            Toàn cảnh <br>
-                                            Xóa phông</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" class="sc-item">Camera trước</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            Độ phân giải</td>
-                                        <td>40 MP, f/2.2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Quay phim</td>
-                                        <td>4K@30/60fps, 1080p@30fps</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Đèn flash</td>
-                                        <td>Có</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tính năng</td>
-                                        <td>Góc rộng <br>
-                                            Góc siêu rộng <br>
-                                            HDR <br>
-                                            Lấy nét theo pha (PDAF) <br>
-                                            Siêu cận <br>
-                                            Toàn cảnh <br>
-                                            Xóa phông</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" class="sc-item">Hệ điều hành</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            OS</td>
-                                        <td>Android 12, One UI 4.1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>CPU</td>
-                                        <td>Octa-core (1x3.00 GHz Cortex-X2 & 3x2.50 GHz Cortex-A710 & 4x1.80 GHz
-                                            Cortex-A510)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Chipset</td>
-                                        <td>Qualcomm Snapdragon 8 Gen 1 (4 nm)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>GPU</td>
-                                        <td>Adreno 730</td>
-                                    </tr>
-                                </tbody>
-                            </table> --}}
                             {!! $product->specifications !!}
                         </div>
 

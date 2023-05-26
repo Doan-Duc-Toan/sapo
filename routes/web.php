@@ -69,13 +69,15 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/customer/profile/{id}', [CustomerController::class, 'profile'])->name('customer.profile');
     Route::get('admin/order/show', [OrderController::class, 'show'])->name('order.show');
     Route::get('admin/order/detail/{id}', [OrderController::class, 'detail'])->name('order.detail');
-
 });
 Route::get('sapo/login', [ClientCustomerController::class, 'login'])->name('client.login');
 Route::get('sapo/register', [ClientCustomerController::class, 'register'])->name('client.register');
-Route::get('sapo',[ClientController::class,'index'])->name('client.index');
+Route::get('sapo', [ClientController::class, 'index'])->name('client.index');
 Route::post('sapo/register/handle', [ClientCustomerController::class, 'register_handle'])->name('client.register_handle');
 Route::post('sapo/login/handle', [ClientCustomerController::class, 'login_handle'])->name('client.login_handle');
 Route::get('sapo/logout', [ClientCustomerController::class, 'logout'])->name('client.logout');
-Route::get('sapo/product/{name}/{id}',[ClientController::class, 'detail'])->name('c_product.detail');
-
+Route::get('sapo/product/{name}/{id}', [ClientController::class, 'detail'])->name('c_product.detail');
+Route::middleware('auth.customer')->group(function () {
+    Route::post('sapo/cart/{id}', [ClientController::class, 'cart_act'])->name('client.cart_act');
+    Route::get('sapo/cart/show',[ClientController::class, 'cart_show'])->name('client.cart_show');
+});

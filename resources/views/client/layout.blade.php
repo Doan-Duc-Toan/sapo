@@ -65,7 +65,7 @@
         <div id="header">
             <div id="top-header" class="">
                 <div class="" id="logo">
-                    <a href="#"><img src="{{ asset('client/img/logo-sapo-02.png') }}" alt=""></a>
+                    <a href="{{route('client.index')}}"><img src="{{ asset('client/img/logo-sapo-02.png') }}" alt=""></a>
                 </div>
                 <div class="center" id="search">
                     <form action="" class="row">

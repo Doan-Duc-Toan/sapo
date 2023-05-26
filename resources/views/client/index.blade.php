@@ -150,7 +150,7 @@
                             </div>
                             <span class="pr-name">{{ $product->name }}</span>
                         </a>
-                        <a href="" class="center setting pt-icon"><i class="fa-solid fa-gear fa-spin"></i></a>
+                        <a href="{{route('c_product.detail',[$product->name,$product->id])}}" class="center setting pt-icon"><i class="fa-solid fa-gear fa-spin"></i></a>
                         <a href="" class="basket center pt-icon"><i
                                 class="fa-solid fa-basket-shopping fa-shake"></i></a>
                         <div class="sale-label">
