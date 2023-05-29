@@ -80,4 +80,5 @@ Route::get('sapo/product/{name}/{id}', [ClientController::class, 'detail'])->nam
 Route::middleware('auth.customer')->group(function () {
     Route::post('sapo/cart/{id}', [ClientController::class, 'cart_act'])->name('client.cart_act');
     Route::get('sapo/cart/show',[ClientController::class, 'cart_show'])->name('client.cart_show');
+    Route::get('sap/cart/cal',[ClientController::class, 'cart_cal'])->name('client.cart_cal');
 });

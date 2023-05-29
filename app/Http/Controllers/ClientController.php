@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\OrderDetail;
+use App\Models\Color;
 
 class ClientController extends Controller
 {
@@ -36,7 +37,7 @@ class ClientController extends Controller
                     'customer_id' => $customer->id,
                     'payment_status' => 'Chưa thanh toán',
                     'payment_method' => 'Khi nhận hàng',
-                    'payment_amount' => $request->input('count') * $product->price * 0.9,
+                    'payment_amount' => $request->input('count') * $product->price * 0.91,
                     'delivery_status' => 'Đơn hàng nháp',
                     'delivery_address' => 'Đang cập nhật',
                 ]);
@@ -48,7 +49,7 @@ class ClientController extends Controller
             } else {
                 $order = Order::find($customer->draft_order);
                 $order->update([
-                    'payment_amount' => $request->input('count') * $product->price * 0.9 + $order->payment_amount
+                    'payment_amount' => $request->input('count') * $product->price * 0.91 + $order->payment_amount
                 ]);
                 $orderDetails = $order->orderDetails;
                 $check = false;
@@ -70,7 +71,23 @@ class ClientController extends Controller
             }
         }
     }
-    function cart_show(){
-        return view('client.cart.show');
+    function cart_show()
+    {
+        if (Auth::guard('customers')->user()->draft_order) {
+            $draft_order = Order::find(Auth::guard('customers')->user()->draft_order);
+            $order_details = $draft_order->orderDetails;
+            return view('client.cart.show', compact('order_details','draft_order'));
+        }
+    }
+    function cart_cal(Request $request){
+        $val = $request -> input('val');
+        $price = intval($request -> input('price')) ;
+        $new_price = $val * $price;
+        $total_amount = $request->input('total_amount') + $price* $request->input('sign');
+        $data  = [
+             'new_price' => $new_price,
+             'total_amount' => $total_amount
+        ];
+        return response()->json($data);        
     }
 }
