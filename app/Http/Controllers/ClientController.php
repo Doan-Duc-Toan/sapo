@@ -45,7 +45,6 @@ class ClientController extends Controller
                 Customer::find($customer->id)->update(
                     ['draft_order' => $order->id]
                 );
-                return redirect()->route('c_product.detail', [$product->name, $product->id]);
             } else {
                 $order = Order::find($customer->draft_order);
                 $order->update([
@@ -67,8 +66,8 @@ class ClientController extends Controller
                     $order->products()->attach($product->id, ['color_id' => $request->input('color'), 'count' => $request->input('count')]);
                 }
                 // return redirect()->route('c_product.detail', [$product->name, $product->id]);
-                return redirect()->route('client.cart_show');
             }
+            return redirect()->route('client.cart_show');
         }
     }
     function cart_show()
@@ -76,18 +75,65 @@ class ClientController extends Controller
         if (Auth::guard('customers')->user()->draft_order) {
             $draft_order = Order::find(Auth::guard('customers')->user()->draft_order);
             $order_details = $draft_order->orderDetails;
-            return view('client.cart.show', compact('order_details','draft_order'));
+            return view('client.cart.show', compact('order_details', 'draft_order'));
+        } else return view('client.cart.show');
+    }
+    function cart_cal(Request $request)
+    {
+        $val = $request->input('val');
+        $price = intval($request->input('price'));
+        $new_price = $val * $price;
+        $total_amount = $request->input('total_amount') + $price * $request->input('sign');
+        $data  = [
+            'new_price' => $new_price,
+            'total_amount' => $total_amount
+        ];
+        return response()->json($data);
+    }
+    function delete_item($id)
+    {
+        $draft_order = Order::find(Auth::guard('customers')->user()->draft_order);
+        $order_details = $draft_order->orderDetails;
+        foreach ($order_details as $order_detail) {
+            if ($order_detail->id == $id) {
+                $draft_order->payment_amount = $draft_order->payment_amount - $order_detail->count * $order_detail->product->price * 0.91;
+                if ($draft_order->payment_amount != 0)
+                    $draft_order->save();
+                else $draft_order->delete();
+                $order_detail->delete();
+                return redirect()->route('client.cart_show');
+            }
         }
     }
-    function cart_cal(Request $request){
-        $val = $request -> input('val');
-        $price = intval($request -> input('price')) ;
-        $new_price = $val * $price;
-        $total_amount = $request->input('total_amount') + $price* $request->input('sign');
-        $data  = [
-             'new_price' => $new_price,
-             'total_amount' => $total_amount
-        ];
-        return response()->json($data);        
+
+    function delete_all()
+    {
+        $draft_order = Order::find(Auth::guard('customers')->user()->draft_order);
+        $order_details = $draft_order->orderDetails;
+        foreach ($order_details as $order_detail) {
+            $order_detail->delete();
+        }
+        $draft_order->delete();
+        return redirect()->route('client.cart_show');
+    }
+    function pay(Request $request)
+    {
+        $draft_order = Order::find(Auth::guard('customers')->user()->draft_order);
+        $order_details = $draft_order->orderDetails;
+        $counts = $request->input('counts');
+        $draft_order->payment_amount = 0;
+        foreach ($order_details as $order_detail) {
+            $count = intval($counts[$order_detail->id]);
+            $order_detail->count = $count;
+            $order_detail->save();
+            $draft_order->payment_amount += $order_detail->product->price * 0.91 * $order_detail->count ;
+        }
+        $draft_order->save();
+        return redirect()->route('client.checkout');
+    }
+    function checkout(){
+        $draft_order = Order::find(Auth::guard('customers')->user()->draft_order);
+        $order_details = $draft_order->orderDetails;
+        return view('client.cart.checkout',compact('order_details','draft_order'));
     }
 }

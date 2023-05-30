@@ -80,5 +80,9 @@ Route::get('sapo/product/{name}/{id}', [ClientController::class, 'detail'])->nam
 Route::middleware('auth.customer')->group(function () {
     Route::post('sapo/cart/{id}', [ClientController::class, 'cart_act'])->name('client.cart_act');
     Route::get('sapo/cart/show',[ClientController::class, 'cart_show'])->name('client.cart_show');
-    Route::get('sap/cart/cal',[ClientController::class, 'cart_cal'])->name('client.cart_cal');
+    Route::get('sapo/cart/cal',[ClientController::class, 'cart_cal'])->name('client.cart_cal');
+    Route::get('sapo/cart/delete_item/{id}',[ClientController::class, 'delete_item'])->name('client.delete_item');
+    Route::get('sapo/cart/delete_all',[ClientController::class, 'delete_all'])->name('client.delete_all');
+    Route::post('sapo/pay',[ClientController::class, 'pay'])->name('client.pay');
+    Route::get('sapo/checkout',[ClientController::class, 'checkout'])->name('client.checkout');
 });

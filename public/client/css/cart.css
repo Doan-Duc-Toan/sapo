@@ -179,17 +179,27 @@ span.p-price {
     border-radius: 5px;
     margin-bottom: 20px;
 }
-
-.pay-mid:hover {
-    background-color: #D60019;
-}
-
-.pay-mid a {
+button{
+    border: none;
+    background-color: #ea1a32;
     font-size: 18px;
     font-weight: 700;
     color: #FFFFFF;
     text-transform: uppercase;
 }
+.pay-mid:hover {
+    background-color: #D60019;
+}
+
+.pay-mid:hover button{
+    background-color: #D60019;
+}
+/* .pay-mid a {
+    font-size: 18px;
+    font-weight: 700;
+    color: #FFFFFF;
+    text-transform: uppercase;
+} */
 
 .pay-bot {
     padding: 5px 10px;
