@@ -85,4 +85,6 @@ Route::middleware('auth.customer')->group(function () {
     Route::get('sapo/cart/delete_all',[ClientController::class, 'delete_all'])->name('client.delete_all');
     Route::post('sapo/pay',[ClientController::class, 'pay'])->name('client.pay');
     Route::get('sapo/checkout',[ClientController::class, 'checkout'])->name('client.checkout');
+    Route::post('sapo/order',[ClientController::class, 'order'])->name('client.order');
+    Route::get('sapo/completed/{id}',[ClientController::class, 'completed'])->name('client.cart_completed');
 });

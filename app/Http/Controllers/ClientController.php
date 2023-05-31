@@ -10,6 +10,7 @@ use App\Models\Order;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\OrderDetail;
 use App\Models\Color;
+use Illuminate\Support\Facades\Session;
 
 class ClientController extends Controller
 {
@@ -40,6 +41,7 @@ class ClientController extends Controller
                     'payment_amount' => $request->input('count') * $product->price * 0.91,
                     'delivery_status' => 'Đơn hàng nháp',
                     'delivery_address' => 'Đang cập nhật',
+                    'delivery_method' => 'Giao hàng tận nơi'
                 ]);
                 $order->products()->attach($product->id, ['color_id' => $request->input('color'), 'count' => $request->input('count')]);
                 Customer::find($customer->id)->update(
@@ -126,14 +128,49 @@ class ClientController extends Controller
             $count = intval($counts[$order_detail->id]);
             $order_detail->count = $count;
             $order_detail->save();
-            $draft_order->payment_amount += $order_detail->product->price * 0.91 * $order_detail->count ;
+            $draft_order->payment_amount += $order_detail->product->price * 0.91 * $order_detail->count;
         }
         $draft_order->save();
         return redirect()->route('client.checkout');
     }
-    function checkout(){
+    function checkout()
+    {
         $draft_order = Order::find(Auth::guard('customers')->user()->draft_order);
         $order_details = $draft_order->orderDetails;
-        return view('client.cart.checkout',compact('order_details','draft_order'));
+        $customer = Auth::guard('customers')->user();
+        return view('client.cart.checkout', compact('order_details', 'draft_order', 'customer'));
+    }
+    function order(Request $request)
+    {
+
+        $validate = $request->validate([
+            'city' => 'required',
+            'district' => 'required',
+            'ward' => 'required'
+        ]);
+        $draft_order = Order::find(Auth::guard('customers')->user()->draft_order);
+        $draft_order_id = $draft_order->id;
+        $delivery_address = "Thành phố {$request->input('city')}" . ", Quận  {$request->input('district')}" . ", Phường {$request->input('ward')}";
+        $draft_order = $draft_order->update([
+            'payment_status' => 'Chưa thanh toán',
+            'payment_method' => $request->input('payment_method'),
+            'payment_amount' => $draft_order->payment_amount + 50000,
+            'delivery_status' => 'Chờ xử lý',
+            'delivery_address' => $delivery_address,
+            'delivery_method' => $request->input('delivery_method'),
+            'note' => $request->input('note')
+        ]);
+        $customer = Auth::guard('customers')->user();
+        $customer->draft_order = null;
+        $customer->save();
+        return redirect()->route('client.cart_completed',$draft_order_id);
+    }
+    function completed($id)
+    {
+       
+        $order = Order::find($id);
+        $order_details = $order->orderDetails;
+        $customer = Auth::guard('customers')->user();
+        return view('client.cart.completed', compact('order','order_details','customer'));
     }
 }

@@ -118,6 +118,7 @@ ul {
     display: flex;
     height: 60px;
     width: 500px;
+    margin-bottom: 15px;
 }
 
 #right #list-product li .p-img {

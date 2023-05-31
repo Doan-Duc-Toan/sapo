@@ -66,9 +66,11 @@ label.lb-ic {
     justify-content: space-between;
     margin-bottom: 15px;
 }
-
-#select-address select {
+#select-address div{
     flex-basis: 32%;
+}
+#select-address select {
+    width: 100%;
     height: 40px;
     border-radius: 5px;
     outline-color: #66AFE9;
@@ -223,6 +225,7 @@ ul {
     display: flex;
     height: 60px;
     width: 500px;
+    margin-bottom: 15px;
 }
 
 #right #list-product li .p-img {

@@ -14,7 +14,9 @@ class Order extends Model
         'payment_method',
         'payment_amount',
         'delivery_status',
-        'delivery_address'
+        'delivery_address',
+        'delivery_method',
+        'note'
     ];
     public function customer()
     {
