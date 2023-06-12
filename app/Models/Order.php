@@ -16,7 +16,10 @@ class Order extends Model
         'delivery_status',
         'delivery_address',
         'delivery_method',
-        'note'
+        'note',
+        'cancel_reason',
+        'cancel_description',
+        'user_id'
     ];
     public function customer()
     {

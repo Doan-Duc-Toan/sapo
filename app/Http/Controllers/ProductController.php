@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Thumb;
 use App\Models\Product_Cat;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -35,7 +36,7 @@ class ProductController extends Controller
         $validate = $request->validate([
             'name' => 'required|string|unique:products',
             'description' => 'required|string',
-            'count' => 'required|integer',
+            // 'count' => 'required|integer',
             'price' => 'required|integer',
             'type' => 'required|string',
             'supplier' => 'required|string',
@@ -46,11 +47,12 @@ class ProductController extends Controller
         $product = Product::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
-            'count' => $request->input('count'),
+            // 'count' => $request->input('count'),
             'price' => $request->input('price'),
             'type' => $request->input('type'),
             'supplier' => $request->input('supplier'),
             'specifications' => $request->input('specifications'),
+            'user_id' => Auth::user()->id,
             // 'salient_features' => $request->input('salient_features'),
         ]);
         if ($request->hasFile('files')) {
@@ -73,71 +75,88 @@ class ProductController extends Controller
     {
 
         $product = Product::find($id);
-        $cats = Cat::all();
-        $colors = Color::all();
-        return view('admin.product.detail', compact('product', 'cats', 'colors'));
+        if ($product->user_id == Auth::user()->id) {
+            $cats = Cat::all();
+            $colors = Color::all();
+            return view('admin.product.detail', compact('product', 'cats', 'colors'));
+        } else {
+            $status = "Bạn không thể thao tác trên sản phẩm này";
+            return redirect()->route('product.show')->with('status', $status);
+        }
     }
     function action($id, Request $request)
     {
         $product_color = $request->input('product_color');
         $product = Product::find($id);
-        if ($request->input('btn_act') == 'update') {
-            $validate = $request->validate([
-                'name' => 'required|string|unique:products,name,' . $product->id,
-                'description' => 'required|string',
-                'count' => 'required|integer',
-                'price' => 'required|integer',
-                'type' => 'required|string',
-                'supplier' => 'required|string',
-                'specifications' => 'string|nullable',
-                // 'salient_features' => 'required|string',
-            ]);
-            $product->update([
-                'name' => $request->input('name'),
-                'description' => $request->input('description'),
-                'count' => $request->input('count'),
-                'price' => $request->input('price'),
-                'type' => $request->input('type'),
-                'supplier' => $request->input('supplier'),
-                'specifications' => $request->input('specifications'),
-                // 'salient_features' => $request->input('salient_features'),
-            ]);
-            if ($request->hasFile('files')) {
-                $files = $request->file('files');
-                foreach ($files as $file) {
-                    $filename = $file->getClientOriginalName();
-                    $path =  $file->move('uploads/images', $filename);
-                    $thumbnail = 'uploads/images/' . $filename;
-                    Thumb::create([
-                        'link' => $thumbnail,
-                        'product_id' => $product->id,
-                    ]);
-                }
-            }
-            if ($request->input('thumb_colors')) {
-                $thumb_colors = $request->input('thumb_colors');
-                foreach ($thumb_colors as $col) {
-                    if (!empty($col)) {
-                        $ids = explode(",", $col);
-                        $thumb_id = $ids[0];
-                        $color_id = $ids[1];
-                        $thumb = Thumb::find($thumb_id);
-                        $thumb->update([
-                            'color_id' => $color_id,
+        if ($product->user_id == Auth::user()->id) {
+            if ($request->input('btn_act') == 'update') {
+                $validate = $request->validate([
+                    'name' => 'required|string|unique:products,name,' . $product->id,
+                    'description' => 'required|string',
+                    // 'count' => 'required|integer',
+                    'price' => 'required|integer',
+                    'type' => 'required|string',
+                    'supplier' => 'required|string',
+                    'specifications' => 'string|nullable',
+                    'product_color' => 'required|array',
+                    'product_color.*' => 'required',
+                    'product_color.*.count' => 'required'
+                    // 'salient_features' => 'required|string',
+                ]);
+                $product->update([
+                    'name' => $request->input('name'),
+                    'description' => $request->input('description'),
+                    // 'count' => $request->input('count'),
+                    'price' => $request->input('price'),
+                    'type' => $request->input('type'),
+                    'supplier' => $request->input('supplier'),
+                    'specifications' => $request->input('specifications'),
+                    // 'salient_features' => $request->input('salient_features'),
+                ]);
+                if ($request->hasFile('files')) {
+                    $files = $request->file('files');
+                    foreach ($files as $file) {
+                        $filename = $file->getClientOriginalName();
+                        $path =  $file->move('uploads/images', $filename);
+                        $thumbnail = 'uploads/images/' . $filename;
+                        Thumb::create([
+                            'link' => $thumbnail,
+                            'product_id' => $product->id,
                         ]);
                     }
                 }
+                if ($request->input('thumb_colors')) {
+                    $thumb_colors = $request->input('thumb_colors');
+                    foreach ($thumb_colors as $col) {
+                        if (!empty($col)) {
+                            $ids = explode(",", $col);
+                            $thumb_id = $ids[0];
+                            $color_id = $ids[1];
+                            $thumb = Thumb::find($thumb_id);
+                            $thumb->update([
+                                'color_id' => $color_id,
+                            ]);
+                        }
+                    }
+                }
+                $product->cats()->sync($request->input('cats', []));
+                $count = 0;
+                foreach ($product->colors as $color) {
+                    $product_color = $request->input('product_color');
+                    $count += $product_color[$color->id]['count'];
+                    $product->colors()->syncWithoutDetaching([$color->id => ['count' => $product_color[$color->id]['count']]]);
+                }
+                $product->count = $count;
+                $product->save();
+                $product->colors()->sync($request->input('colors', []));
+                return redirect()->route('product.show')->with('status', 'Đã chỉnh sửa sản phẩm thành công');
+            } else if ($request->input('btn_act' == 'delete')) {
+                $product->delete();
+                return redirect()->route('product.show')->with('status', 'Đã xóa sản phẩm thành công');
             }
-            $product->cats()->sync($request->input('cats', []));
-            foreach ($product->colors as $color) {
-                $product_color = $request->input('product_color');
-                $product->colors()->syncWithoutDetaching([$color->id => ['count' => $product_color[$color->id]['count']]]);
-            }
-            $product->colors()->sync($request->input('colors', []));
-            return redirect()->route('product.show')->with('status', 'Đã chỉnh sửa sản phẩm thành công');
-        } else if ($request->input('btn_act' == 'delete')) {
-            $product->delete();
-            return redirect()->route('product.show')->with('status', 'Đã xóa sản phẩm thành công');
+        } else {
+            $status = "Bạn không thể thao tác trên sản phẩm này";
+            return redirect()->route('product.show')->with('status', $status);
         }
     }
 
@@ -145,9 +164,14 @@ class ProductController extends Controller
     {
         $thumb = Thumb::find($id);
         $product = $thumb->product;
-        File::delete($thumb->link);
-        $thumb->delete();
-        return redirect()->route('product.detail', $product->id);
+        if ($product->user_id == Auth::user()->id) {
+            File::delete($thumb->link);
+            $thumb->delete();
+            return redirect()->route('product.detail', $product->id);
+        } else {
+            $status = "Bạn không thể thao tác trên sản phẩm này";
+            return redirect()->route('product.show')->with('status', $status);
+        }
     }
     public function filter(Request $request)
     {

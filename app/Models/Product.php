@@ -16,6 +16,7 @@ class Product extends Model
         'type',
         'supplier',
         'specifications',
+        'user_id'
         // 'salient_features'
     ];
     public function cats(){

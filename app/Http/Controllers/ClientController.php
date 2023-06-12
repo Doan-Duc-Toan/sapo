@@ -135,42 +135,47 @@ class ClientController extends Controller
     }
     function checkout()
     {
-        $draft_order = Order::find(Auth::guard('customers')->user()->draft_order);
-        $order_details = $draft_order->orderDetails;
-        $customer = Auth::guard('customers')->user();
-        return view('client.cart.checkout', compact('order_details', 'draft_order', 'customer'));
+        if (Auth::guard('customers')->user()->draft_order) {
+            $draft_order = Order::find(Auth::guard('customers')->user()->draft_order);
+            $order_details = $draft_order->orderDetails;
+            $customer = Auth::guard('customers')->user();
+            return view('client.cart.checkout', compact('order_details', 'draft_order', 'customer'));
+        }
+        return redirect()->route('client.index');
     }
     function order(Request $request)
     {
-
-        $validate = $request->validate([
-            'city' => 'required',
-            'district' => 'required',
-            'ward' => 'required'
-        ]);
-        $draft_order = Order::find(Auth::guard('customers')->user()->draft_order);
-        $draft_order_id = $draft_order->id;
-        $delivery_address = "Thành phố {$request->input('city')}" . ", Quận  {$request->input('district')}" . ", Phường {$request->input('ward')}";
-        $draft_order = $draft_order->update([
-            'payment_status' => 'Chưa thanh toán',
-            'payment_method' => $request->input('payment_method'),
-            'payment_amount' => $draft_order->payment_amount + 50000,
-            'delivery_status' => 'Chờ xử lý',
-            'delivery_address' => $delivery_address,
-            'delivery_method' => $request->input('delivery_method'),
-            'note' => $request->input('note')
-        ]);
-        $customer = Auth::guard('customers')->user();
-        $customer->draft_order = null;
-        $customer->save();
-        return redirect()->route('client.cart_completed',$draft_order_id);
+        if (Auth::guard('customers')->user()->draft_order) {
+            $validate = $request->validate([
+                'city' => 'required',
+                'district' => 'required',
+                'ward' => 'required'
+            ]);
+            $draft_order = Order::find(Auth::guard('customers')->user()->draft_order);
+            $draft_order_id = $draft_order->id;
+            $delivery_address = "Thành phố {$request->input('city')}" . ", Quận  {$request->input('district')}" . ", Phường {$request->input('ward')}";
+            $draft_order = $draft_order->update([
+                'payment_status' => 'Chưa thanh toán',
+                'payment_method' => $request->input('payment_method'),
+                'payment_amount' => $draft_order->payment_amount + 50000,
+                'delivery_status' => 'Chờ xử lý',
+                'delivery_address' => $delivery_address,
+                'delivery_method' => $request->input('delivery_method'),
+                'note' => $request->input('note')
+            ]);
+            $customer = Auth::guard('customers')->user();
+            $customer->draft_order = null;
+            $customer->save();
+            return redirect()->route('client.cart_completed', $draft_order_id);
+        }
+        return redirect()->route('client.index');
     }
     function completed($id)
     {
-       
+
         $order = Order::find($id);
         $order_details = $order->orderDetails;
         $customer = Auth::guard('customers')->user();
-        return view('client.cart.completed', compact('order','order_details','customer'));
+        return view('client.cart.completed', compact('order', 'order_details', 'customer'));
     }
 }

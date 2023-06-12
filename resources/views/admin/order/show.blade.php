@@ -4,6 +4,11 @@
         <div class="title col-md-12">
             <h3>Đơn hàng</h3>
         </div>
+        @if (session('status'))
+            <div class="alert alert-success col-md-12">
+                {{ session('status') }}
+            </div>
+        @endif
         <div class="main-content row col-md-12 p-3">
             <ul class="status col-md-12 d-flex">
                 <li class="status-item all"><a href="" class="text-secondary">Tất cả đơn hàng</a></li>
@@ -15,86 +20,108 @@
                         giao</a></li>
                 <li class="status-item storag"><a href="" class="text-secondary">Lưu trữ</a></li>
             </ul>
-            <form action="">
+            <form action="{{route('order.filter')}}" method="POST">
+                @csrf
                 <div class="custom col-md-12 d-flex">
                     <div class="custom-item first">Lọc đơn hàng
                     </div>
-                    <div class="custom-item"><span>Trạng thái <i class="fa-sharp fa-solid fa-caret-down"></i></span></i>
+                    <div class="custom-item"><span>Loại <i class="fa-sharp fa-solid fa-caret-down"></i></span></i>
                         <div class="custom-detail">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="status" id="open" value="option1"
+                                <input class="form-check-input" type="radio" name="type" id="open" value="open"
                                     checked>
                                 <label class="form-check-label" for="open">
                                     Mở
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="status" id="store"
-                                    value="option2">
+                                <input class="form-check-input" type="radio" name="type" id="store"
+                                    value="store">
                                 <label class="form-check-label" for="store">
                                     Lưu trữ
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="status" id="cancel"
-                                    value="option3">
+                                <input class="form-check-input" type="radio" name="type" id="cancel"
+                                    value="cancel">
                                 <label class="form-check-label" for="cancel">
                                     Hủy
                                 </label>
                             </div>
-                            <button class="btn btn-secondary">Lọc</button>
+                            <button name="btn_filter" value="type" class="btn btn-secondary">Lọc</button>
                         </div>
                     </div>
                     <div class="custom-item"><span>Thanh toán <i class="fa-sharp fa-solid fa-caret-down"></i></span> </i>
                         <div class="custom-detail">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="pay[]" id="unpaid"
-                                    value="option1" checked>
+                                <input class="form-check-input" type="radio" name="payment" id="unpaid"
+                                    value="Chưa thanh toán" checked>
                                 <label class="form-check-label" for="unpaid">
                                     Chưa thanh toán
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="pay[]" id="paid"
-                                    value="option2">
+                                <input class="form-check-input" type="radio" name="payment" id="paid"
+                                    value="Đã thanh toán">
                                 <label class="form-check-label" for="paid">
                                     Đã thanh toán
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="pay[]" id="wait"
-                                    value="option3">
-                                <label class="form-check-label" for="wait">
-                                    Chờ xác nhận
+                                <input class="form-check-input" type="radio" name="payment" id="to_return"
+                                    value="Hoàn trả">
+                                <label class="form-check-label" for="to_return">
+                                    Hoàn trả
                                 </label>
                             </div>
-                            <button class="btn btn-secondary">Lọc</button>
+                            <button name="btn_filter" value="payment" class="btn btn-secondary">Lọc</button>
                         </div>
                     </div>
-                    <div class="custom-item"><span>Giao hàng <i class="fa-sharp fa-solid fa-caret-down"></i></span>
+                    <div class="custom-item"><span>Trạng thái <i class="fa-sharp fa-solid fa-caret-down"></i></span>
                         <div class="custom-detail">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="ship[]" id="unship"
-                                    value="option1" checked>
-                                <label class="form-check-label" for="unship">
-                                    Chưa chuyển
+                                <input class="form-check-input" type="checkbox" name="ship[]" 
+                                    value="Đơn hàng nháp" checked>
+                                <label class="form-check-label" for="">
+                                    Đơn hàng nháp
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="ship[]" id="part-ship"
-                                    value="option2">
-                                <label class="form-check-label" for="part-ship">
-                                    Chuyển một phần
+                                <input class="form-check-input" type="checkbox" name="ship[]"
+                                    value="Chờ xử lý">
+                                <label class="form-check-label" for="">
+                                    Chờ xử lý
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="ship[]" id="ship-all"
-                                    value="option3">
-                                <label class="form-check-label" for="ship-all">
-                                    Chuyển toàn bộ
+                                <input class="form-check-input" type="checkbox" name="ship[]" 
+                                    value="Chờ lấy hàng">
+                                <label class="form-check-label" for="">
+                                    Chờ lấy hàng
                                 </label>
                             </div>
-                            <button class="btn btn-secondary">Lọc</button>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="ship[]" 
+                                    value="Đang giao">
+                                <label class="form-check-label" for="">
+                                    Đang giao
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="ship[]" 
+                                    value="Hoàn thành">
+                                <label class="form-check-label" for="">
+                                     Hoàn thành
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="ship[]" 
+                                    value="Đã hủy">
+                                <label class="form-check-label" for="">
+                                    Đã hủy
+                                </label>
+                            </div>
+                            <button name="btn_filter" value="delivery" class="btn btn-secondary">Lọc</button>
                         </div>
                     </div>
                     <div class="search custom-item">
@@ -105,33 +132,33 @@
                         <div class="custom-detail">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="arrange" id="day-reduce"
-                                    value="option1" checked>
+                                    value="created_at,desc" checked>
                                 <label class="form-check-label" for="day-reduce">
                                     Ngày (Giảm dần)
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="arrange" id="day-inc"
-                                    value="option2">
+                                    value="created_at,asc">
                                 <label class="form-check-label" for="day-inc">
                                     Ngày (Tăng dần)
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="arrange" id="price-reduce"
-                                    value="option3">
+                                    value="payment_amount,desc">
                                 <label class="form-check-label" for="price-reduce">
                                     Giá (Giảm dần)
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="arrange" id="price-inc"
-                                    value="option3">
+                                    value="payment_amount,asc">
                                 <label class="form-check-label" for="price-inc">
                                     Giá (Tăng dần)
                                 </label>
                             </div>
-                            <button class="btn btn-secondary">Lọc</button>
+                            <button class="btn btn-secondary" name="btn_filter" value="arrange">Lọc</button>
                         </div>
                     </div>
                 </div>
@@ -164,25 +191,25 @@
                                     <tr class="">
                                         <td scope="row"><input type="checkbox" class="form-check-input check">
                                         </td>
-                                        <td><a href="{{ route('order.detail', $order->id) }}">#{{$order->id}}</a></td>
-                                        <td>{{$order->created_at}}</td>
-                                        <td>{{$order->customer->fullname}}</td>
-                                        <td class=""><span class="badge  @php
-                                            if($order->payment_status == 'Đã thanh toán') echo 'bg-success';
-                                             else echo 'bg-secondary';
-                                        @endphp">{{$order->payment_status}}</span>
+                                        <td><a href="{{ route('order.detail', $order->id) }}">#{{ $order->id }}</a></td>
+                                        <td>{{ $order->created_at }}</td>
+                                        <td>{{ $order->customer->fullname }}</td>
+                                        <td class=""><span
+                                                class="badge  @php
+if($order->payment_status == 'Đã thanh toán') echo 'bg-success';
+                                             else echo 'bg-secondary'; @endphp">{{ $order->payment_status }}</span>
                                         </td>
-                                        <td><span class="badge @php
-                                            if($order->delivery_status == 'Đã giao')echo 'bg-success';
-                                             else echo 'bg-danger';
-                                        @endphp">{{$order->delivery_status}}</span></td>
+                                        <td><span
+                                                class="badge @php
+if($order->delivery_status == 'Đã giao')echo 'bg-success';
+                                             else echo 'bg-danger'; @endphp">{{ $order->delivery_status }}</span>
+                                        </td>
                                         <td>{{ number_format($order->payment_amount, 0, '.', ',') . ' VND' }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
-                            {{ $orders->links('pagination::bootstrap-5') }}
                         </table>
-                        
+                        {{ $orders->links('pagination::bootstrap-5') }}
                     </div>
 
                 </div>

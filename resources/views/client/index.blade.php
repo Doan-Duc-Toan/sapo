@@ -437,8 +437,8 @@
             </div>
             <div class="list-content">
                 <div class="list-sidebar">
-                    <a href="" class="sb-product sb-top"><img src="img/bn_pr_3_1.webp" alt=""></a>
-                    <a href="" class="sb-product sb-bot"><img src="img/bn_pr_3_2.webp" alt=""></a>
+                    <a href="" class="sb-product sb-top"><img src="{{asset('client/img/bn_pr_3_1.webp')}}" alt=""></a>
+                    <a href="" class="sb-product sb-bot"><img src="{{asset('client/img/bn_pr_3_2.webp')}}" alt=""></a>
                 </div>
                 <ul class="list-product  p-list">
                     <li class="product-item">
@@ -827,8 +827,8 @@
                     </li>
                 </ul>
                 <div class="list-sidebar">
-                    <a href="" class="sb-product sb-top"><img src="img/16.webp" alt=""></a>
-                    <a href="" class="sb-product sb-bot"><img src="img/17.webp" alt=""></a>
+                    <a href="" class="sb-product sb-top"><img src="{{asset('client/img/16.webp')}}" alt=""></a>
+                    <a href="" class="sb-product sb-bot"><img src="{{asset('client/img/17.webp')}}" alt=""></a>
                 </div>
             </div>
             <div class="banner">

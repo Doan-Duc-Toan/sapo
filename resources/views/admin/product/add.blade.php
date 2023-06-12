@@ -39,14 +39,14 @@
                     </div>
                     <div class="col-md-12 version row">
                         <span><b>Phiên bản</b></span><br>
-                        <div class="col-md-6 form-group">
+                        {{-- <div class="col-md-6 form-group">
                             <label for="count" class="">Số lượng</label>
                             <input type="number" id="count" class="form-control" value="{{ old('count') }}"
                                 name="count" min="0">
                             @error('count')
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
-                        </div>
+                        </div> --}}
                         <div class="col-md-6 form-group">
                             <label for="price" class="">Giá một sản phẩm (đ)</label>
                             <input type="text" id="price" class="form-control" value="{{ old('price') }}"

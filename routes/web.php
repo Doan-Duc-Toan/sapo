@@ -63,12 +63,18 @@ Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
     });
-    Route::post('admin/product/filter', [ProductController::class, 'filter'])->name('product.filter');
+    Route::any('admin/product/filter', [ProductController::class, 'filter'])->name('product.filter');
     Route::get('admin/product/search', [ProductController::class, 'search_ajax'])->name('product.search_ajax');
     Route::get('admin/customer/show', [CustomerController::class, 'show'])->name('customer.show');
     Route::get('admin/customer/profile/{id}', [CustomerController::class, 'profile'])->name('customer.profile');
     Route::get('admin/order/show', [OrderController::class, 'show'])->name('order.show');
     Route::get('admin/order/detail/{id}', [OrderController::class, 'detail'])->name('order.detail');
+    Route::get('admin/order/ship/{id}', [OrderController::class, 'ship'])->name('order.ship');
+    Route::post('admin/order/cancel/{id}', [OrderController::class, 'cancel'])->name('order.cancel');
+    Route::get('admin/order/{status}/{id}', [OrderController::class, 'status'])->name('order.status');
+    Route::get('admin/order/payment/complete/{id}', [OrderController::class, 'payment_complete'])->name('order.payment_complete');
+    Route::post('admin/order/to_return/{id}', [OrderController::class, 'to_return'])->name('order.to_return');
+    Route::post('admin/order/filter', [OrderController::class, 'filter'])->name('order.filter');
 });
 Route::get('sapo/login', [ClientCustomerController::class, 'login'])->name('client.login');
 Route::get('sapo/register', [ClientCustomerController::class, 'register'])->name('client.register');

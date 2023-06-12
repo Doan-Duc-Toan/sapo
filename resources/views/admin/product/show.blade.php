@@ -150,7 +150,7 @@
                                             <div><span>{{number_format($product->price, 0, ".", ",") . " VND"}}</span></div>
                                         </td>
                                         <td>
-                                            <div><span>{{ $product->count }} sản phẩm</span></div>
+                                            <div><span>{{ $product->count }}</span></div>
                                         </td>
                                         <td>
                                             <div><span>{{ $product->type }}</span></div>
