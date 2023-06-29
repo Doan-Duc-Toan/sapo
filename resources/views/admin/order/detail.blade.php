@@ -15,18 +15,13 @@
             @foreach ($order_details as $order_detail)
                 <div class="col-md-12 row order-detail-content mt-3">
                     <div class="col-md-7 row  product">
-                        <div class="col-md-3 img-product"><img
-                                src="@php
-if(!empty($order_detail->color))
-                                 {
-                                    $thumbs = $order_detail->product->thumbs;
-                                    foreach ($thumbs as $thumb) {
-                                        if($thumb->color == $order_detail->color) {
-                                            echo asset($thumb->link);break;
-                                        }
-                                    }
-                                 } @endphp"
-                                alt="">
+                        @php
+                            $thumb = $order_detail->product->thumbs->where('color_id', $order_detail->color->id)->first();
+                        @endphp
+                        <div class="col-md-3 img-product">
+                            @if (!empty($thumb))
+                                <img src="{{ asset($thumb->link) }}" alt="">
+                            @endif
                         </div>
                         <div class="col-md-9 d-flex product-info">
                             <a href="{{ route('product.detail', $order_detail->product->id) }}"><span
@@ -97,7 +92,7 @@ if(!empty($order_detail->color))
                             <div class="modal fade" id="modal-to-return" tabindex="-1" role="dialog"
                                 aria-labelledby="modalTitleId" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
-                                    <form action="{{route('order.to_return',$order->id)}}" method="POST">
+                                    <form action="{{ route('order.to_return', $order->id) }}" method="POST">
                                         @csrf
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -111,18 +106,14 @@ if(!empty($order_detail->color))
                                                         @foreach ($order_details as $order_detail)
                                                             <div class="col-md-12 row order-detail-content mt-3">
                                                                 <div class="col-md-7 row  product">
-                                                                    <div class="col-md-3 img-product"><img
-                                                                            src="@php
-if(!empty($order_detail->color))
-                                 {
-                                    $thumbs = $order_detail->product->thumbs;
-                                    foreach ($thumbs as $thumb) {
-                                        if($thumb->color == $order_detail->color) {
-                                            echo asset($thumb->link);break;
-                                        }
-                                    }
-                                 } @endphp"
-                                                                            alt="">
+                                                                    @php
+                                                                        $thumb = $order_detail->product->thumbs->where('color_id', $order_detail->color->id)->first();
+                                                                    @endphp
+                                                                    <div class="col-md-3 img-product">
+                                                                        @if (!empty($thumb))
+                                                                            <img src="{{ asset($thumb->link) }}"
+                                                                                alt="">
+                                                                        @endif
                                                                     </div>
                                                                     <div class="col-md-9 d-flex product-info">
                                                                         <a
@@ -184,25 +175,26 @@ if(!empty($order_detail->color))
                                 class="total-all-price d-inline p-0 text-secondary"><b>{{ number_format($order->payment_amount, 0, '.', ',') . ' VND' }}</b></span></span>
                     </div>
                     @if ($order->delivery_status != 'Đơn hàng nháp')
-                    <a href="{{ route('order.payment_complete', $order->id) }}" class="button col-md-4"
-                        onclick="return confirm('Bạn có chắc chắn rằng đơn hàng này đã được thanh toán?')">Xác nhận đã
-                        thanh toán</a>
-                        
+                        <a href="{{ route('order.payment_complete', $order->id) }}" class="button col-md-4"
+                            onclick="return confirm('Bạn có chắc chắn rằng đơn hàng này đã được thanh toán?')">Xác nhận đã
+                            thanh toán</a>
                     @endif
-                    
                 @else
-                <div class="col-md-8 confirm">
-                    <span class="text-danger text-uppercase">Đơn
-                        hàng đã được hoàn trả <span
-                            class="total-all-price d-inline p-0 text-secondary"><b>{{ number_format($order->payment_amount, 0, '.', ',') . ' VND' }}</b></span></span>
-                </div>
+                    <div class="col-md-8 confirm">
+                        <span class="text-danger text-uppercase">Đơn
+                            hàng đã được hoàn trả <span
+                                class="total-all-price d-inline p-0 text-secondary"><b>{{ number_format($order->payment_amount, 0, '.', ',') . ' VND' }}</b></span></span>
+                    </div>
                 @endif
 
 
             </div>
             <div class="col-md-12 row manipulation-order">
                 <div class="col-md-6 cancel-order">
-                    @if ($order->delivery_status != 'Đã hủy' && $order->delivery_status != 'Hoàn thành' && $order->delivery_status != 'Đơn hàng nháp')
+                    @if (
+                        $order->delivery_status != 'Đã hủy' &&
+                            $order->delivery_status != 'Hoàn thành' &&
+                            $order->delivery_status != 'Đơn hàng nháp')
                         <form action="{{ route('order.cancel', $order->id) }}" method="POST">
                             @csrf
                             <span class="button bg-danger text-warning" data-bs-toggle="modal"
@@ -254,18 +246,14 @@ if(!empty($order_detail->color))
                                                     @foreach ($order_details as $order_detail)
                                                         <div class="col-md-12 row order-detail-content mt-3">
                                                             <div class="col-md-7 row  product">
-                                                                <div class="col-md-3 img-product"><img
-                                                                        src="@php
-if(!empty($order_detail->color))
-                                 {
-                                    $thumbs = $order_detail->product->thumbs;
-                                    foreach ($thumbs as $thumb) {
-                                        if($thumb->color == $order_detail->color) {
-                                            echo asset($thumb->link);break;
-                                        }
-                                    }
-                                 } @endphp"
-                                                                        alt="">
+                                                                @php
+                                                                    $thumb = $order_detail->product->thumbs->where('color_id', $order_detail->color->id)->first();
+                                                                @endphp
+                                                                <div class="col-md-3 img-product">
+                                                                    @if (!empty($thumb))
+                                                                        <img src="{{ asset($thumb->link) }}"
+                                                                            alt="">
+                                                                    @endif
                                                                 </div>
                                                                 <div class="col-md-9 d-flex product-info">
                                                                     <a
@@ -359,18 +347,14 @@ if(!empty($order_detail->color))
                                                     @foreach ($order_details as $order_detail)
                                                         <div class="col-md-12 row order-detail-content mt-3">
                                                             <div class="col-md-7 row  product">
-                                                                <div class="col-md-3 img-product"><img
-                                                                        src="@php
-if(!empty($order_detail->color))
-                                 {
-                                    $thumbs = $order_detail->product->thumbs;
-                                    foreach ($thumbs as $thumb) {
-                                        if($thumb->color == $order_detail->color) {
-                                            echo asset($thumb->link);break;
-                                        }
-                                    }
-                                 } @endphp"
-                                                                        alt="">
+                                                                @php
+                                                                    $thumb = $order_detail->product->thumbs->where('color_id', $order_detail->color->id)->first();
+                                                                @endphp
+                                                                <div class="col-md-3 img-product">
+                                                                    @if (!empty($thumb))
+                                                                        <img src="{{ asset($thumb->link) }}"
+                                                                            alt="">
+                                                                    @endif
                                                                 </div>
                                                                 <div class="col-md-9 d-flex product-info">
                                                                     <a

@@ -30,6 +30,7 @@ class ClientController extends Controller
     function cart_act($id, Request $request)
     {
         $product = Product::find($id);
+        $product_colors = $product->product_color;
         $customer = Auth::guard('customers')->user();
         $act = $request->input('btn_act');
         if ($act == 'add_cart') {
@@ -44,6 +45,7 @@ class ClientController extends Controller
                     'delivery_method' => 'Giao hàng tận nơi'
                 ]);
                 $order->products()->attach($product->id, ['color_id' => $request->input('color'), 'count' => $request->input('count')]);
+                // $order->products()->attach($product->id, ['count' => $request->input('count')]);
                 Customer::find($customer->id)->update(
                     ['draft_order' => $order->id]
                 );

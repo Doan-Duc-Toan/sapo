@@ -50,21 +50,22 @@ if($count == 1 ) echo 'img-active';
                         @php
                             $count = 1;
                         @endphp
-                        @foreach ($product->thumbs as $thumb)
-                            @if ($thumb->color_id)
-                                @php
-                                    $color = App\Models\Color::find($thumb->color_id);
-                                @endphp
-                                <div class="color-item @php
+                        @foreach ($product->colors as $color)
+                            @php
+                                $thumb = $product->thumbs->where('color_id',$color->id)->first();
+                            @endphp
+                            <div class="color-item @php
 if($count == 1 ) echo 'c-active'; @endphp">
+                                @if (!empty($thumb))
                                     <img src="{{ asset($thumb->link) }}" alt="">
-                                    <span class="mark-icon">✓</span>
-                                    <input type="radio" name="color" @php
+                                @endif
+                                <span class="mark-icon">✓</span>
+                                <input type="radio" name="color"
+                                    @php
 if($count == 1 ) echo 'checked'; $count = 0; @endphp
-                                        value="{{ $color->id }}" id="{{ $color->id }}">
-                                    <label for="{{ $color->id }}">{{ $color->name }}</label>
-                                </div>
-                            @endif
+                                    value="{{ $color->id }}" id="{{ $color->id }}">
+                                <label for="{{ $color->id }}">{{ $color->name }}</label>
+                            </div>
                         @endforeach
                     </div>
                 </div>

@@ -33,4 +33,7 @@ class Order extends Model
     {
         return $this->belongsToMany(Product::class, 'order_detail')->withPivot(['color_id', 'count']);;
     }
+    public function product_color(){
+        return $this->hasMany(Product_Color::class, 'order_detail')->withPivot('count');
+    }
 }

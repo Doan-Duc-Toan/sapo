@@ -75,6 +75,8 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/order/payment/complete/{id}', [OrderController::class, 'payment_complete'])->name('order.payment_complete');
     Route::post('admin/order/to_return/{id}', [OrderController::class, 'to_return'])->name('order.to_return');
     Route::post('admin/order/filter', [OrderController::class, 'filter'])->name('order.filter');
+    Route::get('admin/order/search', [OrderController::class, 'search_ajax'])->name('order.search_ajax');
+
 });
 Route::get('sapo/login', [ClientCustomerController::class, 'login'])->name('client.login');
 Route::get('sapo/register', [ClientCustomerController::class, 'register'])->name('client.register');

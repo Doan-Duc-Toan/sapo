@@ -22,6 +22,9 @@ class Product extends Model
     public function cats(){
         return $this->belongsToMany(Cat::class, 'product_cat');
     }
+    public function product_color(){
+        return $this->hasMany(Product_Color::class,'product_id');
+    }
     public function colors(){
         return $this->belongsToMany(Color::class, 'product_color')->withPivot('count');
     }

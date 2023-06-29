@@ -11,16 +11,12 @@
         @endif
         <div class="main-content row col-md-12 p-3">
             <ul class="status col-md-12 d-flex">
-                <li class="status-item all"><a href="" class="text-secondary">Tất cả đơn hàng</a></li>
-                <li class="status-item open-product"><a href="" class="text-secondary">Đơn hàng đang
-                        mở</a></li>
-                <li class="status-item unpaid "><a href="" class="text-secondary">Chưa thanh toán</a>
-                </li>
-                <li class="status-item not-yet-delivered"><a href="" class="text-secondary">Chưa được
-                        giao</a></li>
-                <li class="status-item storag"><a href="" class="text-secondary">Lưu trữ</a></li>
+                <li class="status-item all"><a href="{{ route('order.show', ['status' => 'all']) }}" class="text-secondary">Tất cả
+                        đơn hàng</a></li>
+                <li class="status-item"><a href="{{ route('order.show', ['status' => 'own']) }}" class="text-secondary">Đơn hàng
+                        của bạn</a></li>
             </ul>
-            <form action="{{route('order.filter')}}" method="POST">
+            <form action="{{ route('order.filter', ['status' => $current_status]) }}" method="POST">
                 @csrf
                 <div class="custom col-md-12 d-flex">
                     <div class="custom-item first">Lọc đơn hàng
@@ -35,15 +31,13 @@
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="type" id="store"
-                                    value="store">
+                                <input class="form-check-input" type="radio" name="type" id="store" value="store">
                                 <label class="form-check-label" for="store">
                                     Lưu trữ
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="type" id="cancel"
-                                    value="cancel">
+                                <input class="form-check-input" type="radio" name="type" id="cancel" value="cancel">
                                 <label class="form-check-label" for="cancel">
                                     Hủy
                                 </label>
@@ -80,43 +74,38 @@
                     <div class="custom-item"><span>Trạng thái <i class="fa-sharp fa-solid fa-caret-down"></i></span>
                         <div class="custom-detail">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="ship[]" 
-                                    value="Đơn hàng nháp" checked>
+                                <input class="form-check-input" type="checkbox" name="ship[]" value="Đơn hàng nháp"
+                                    checked>
                                 <label class="form-check-label" for="">
                                     Đơn hàng nháp
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="ship[]"
-                                    value="Chờ xử lý">
+                                <input class="form-check-input" type="checkbox" name="ship[]" value="Chờ xử lý">
                                 <label class="form-check-label" for="">
                                     Chờ xử lý
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="ship[]" 
-                                    value="Chờ lấy hàng">
+                                <input class="form-check-input" type="checkbox" name="ship[]" value="Chờ lấy hàng">
                                 <label class="form-check-label" for="">
                                     Chờ lấy hàng
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="ship[]" 
-                                    value="Đang giao">
+                                <input class="form-check-input" type="checkbox" name="ship[]" value="Đang giao">
                                 <label class="form-check-label" for="">
                                     Đang giao
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="ship[]" 
-                                    value="Hoàn thành">
+                                <input class="form-check-input" type="checkbox" name="ship[]" value="Hoàn thành">
                                 <label class="form-check-label" for="">
-                                     Hoàn thành
+                                    Hoàn thành
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="ship[]" 
-                                    value="Đã hủy">
+                                <input class="form-check-input" type="checkbox" name="ship[]" value="Đã hủy">
                                 <label class="form-check-label" for="">
                                     Đã hủy
                                 </label>
@@ -127,6 +116,8 @@
                     <div class="search custom-item">
                         <button><i class="fa-solid fa-magnifying-glass"></i></button>
                         <input type="text" placeholder="Tìm kiếm đơn hàng">
+                        <div id="countryList" class="col-md-12"><br>
+                        </div>
                     </div>
                     <div class="custom-item arrange"><span><i class="fa-solid fa-arrow-down-wide-short"></i></span>
                         <div class="custom-detail">
@@ -217,4 +208,32 @@ if($order->delivery_status == 'Đã giao')echo 'bg-success';
 
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            $(".search input").keyup(function() {
+                var query = $(this).val();
+                if (query != '') {
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{ route('order.search_ajax') }}",
+                        data: {
+                            query: query,
+                        },
+                        success: function(data) {
+                            $('#countryList').fadeIn();
+                            $('#countryList').html(data);
+                        },
+                    });
+                } else {
+                    $('#countryList').fadeOut();
+                }
+            })
+            $('.search input').keydown(function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
+        })
+    </script>
 @endsection

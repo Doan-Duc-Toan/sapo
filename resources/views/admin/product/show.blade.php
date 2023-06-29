@@ -174,10 +174,9 @@
         </div>
     </div>
     <script>
-        $(document).ready(function() {
             $(".search input").keyup(function() {
                 var query = $(this).val();
-                if (query != '') {
+                if (query != null) {
                     $.ajax({
                         type: 'GET',
                         url: "{{ route('product.search_ajax') }}",
@@ -198,7 +197,6 @@
             })
 
 
-        })
     </script>
    
 @endsection

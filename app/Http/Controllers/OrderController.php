@@ -11,11 +11,18 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
     //
-    public function show($orders = null)
+
+    public function show(Request $request)
     {
+        $current_status = $request->input('status');
+        if (!$current_status) $current_status = 'all';
+        $orders = $request->session()->get('orders');
+        session()->forget('orders');
         if (!$orders)
-            $orders = Order::paginate(5);
-        return view('admin.order.show', compact('orders'));
+            if ($current_status == 'all')
+                $orders = Order::paginate(5);
+            else $orders = Order::where('user_id', Auth::user()->id)->paginate(5);
+        return view('admin.order.show', compact('orders', 'current_status'));
     }
     function detail($id)
     {
@@ -140,43 +147,85 @@ class OrderController extends Controller
     }
     public function filter(Request $request)
     {
-        $orders = Order::paginate(5);
+        $status = $request->input('status');
         $filter = $request->input('btn_filter');
-        if ($filter == 'type') {
-            $type = $request->input('type');
-            if (empty($type)) return $this->show($orders);
-            if ($type == 'open') {
-                $orders = Order::whereNot('delivery_status', 'Đã hủy')->whereNot('delivery_status', 'Hoàn thành')->paginate(5);
-            } else if ($type == 'store') {
-                $orders = Order::where('delivery_status', 'Hoàn thành')->paginate(5);
-            } else {
-                if ($type == 'cancel') $orders = Order::where('delivery_status', 'Đã hủy')->paginate(5);
+        if ($status == 'all') {
+            $orders = Order::paginate(5);
+            if ($filter == 'type') {
+                $type = $request->input('type');
+                if (empty($type)) return $this->show($orders);
+                if ($type == 'open') {
+                    $orders = Order::whereNot('delivery_status', 'Đã hủy')->whereNot('delivery_status', 'Hoàn thành')->paginate(5);
+                } else if ($type == 'store') {
+                    $orders = Order::where('delivery_status', 'Hoàn thành')->paginate(5);
+                } else {
+                    if ($type == 'cancel') $orders = Order::where('delivery_status', 'Đã hủy')->paginate(5);
+                }
+            } else if ($filter == 'payment') {
+                $payment = $request->input('payment');
+                if (empty($payment)) return $this->show($orders);
+                $orders = Order::where('payment_status', $payment)->paginate(5);
+            } else if ($filter == 'delivery') {
+                $ships = $request->input('ship');
+                if (empty($ships)) return $this->show($orders);
+                $orders = Order::whereIn('delivery_status', $ships)->paginate(5);
+            } else if ($filter == 'arrange') {
+                $arrange = $request->input('arrange');
+                if (empty($arrange)) return $this->show($orders);
+                $arrange = explode(",", $arrange);
+                $part_1 = $arrange[0];
+                $part_2 = $arrange[1];
+                $orders = Order::orderBy($part_1, $part_2)->paginate(5);
             }
-        } else if ($filter == 'payment') {
-            $payment = $request->input('payment');
-            if (empty($payment)) return $this->show($orders);
-            $orders = Order::where('payment_status', $payment)->paginate(5);
-        } else if ($filter == 'delivery') {
-            $ships = $request->input('ship');
-            if (empty($ships)) return $this->show($orders);
-            $orders = Order::whereIn('delivery_status', $ships)->paginate(5);
-        } else if ($filter == 'arrange') {
-            $arrange = $request->input('arrange');
-            if (empty($arrange)) return $this->show($orders);
-            $arrange = explode(",", $arrange);
-            $part_1 = $arrange[0];
-            $part_2 = $arrange[1];
-            $orders = Order::orderBy($part_1, $part_2)->paginate(5);
+        } else {
+            $orders = Order::where('user_id', Auth::user()->id)->paginate(5);
+            if ($filter == 'type') {
+                $type = $request->input('type');
+                if (empty($type)) return $this->show($orders);
+                if ($type == 'open') {
+                    $orders = Order::where('user_id', Auth::user()->id)->whereNot('delivery_status', 'Đã hủy')->whereNot('delivery_status', 'Hoàn thành')->paginate(5);
+                } else if ($type == 'store') {
+                    $orders = Order::where('user_id', Auth::user()->id)->where('delivery_status', 'Hoàn thành')->paginate(5);
+                } else {
+                    if ($type == 'cancel') $orders = Order::where('user_id', Auth::user()->id)->where('delivery_status', 'Đã hủy')->paginate(5);
+                }
+            } else if ($filter == 'payment') {
+                $payment = $request->input('payment');
+                if (empty($payment)) return $this->show($orders);
+                $orders = Order::where('user_id', Auth::user()->id)->where('payment_status', $payment)->paginate(5);
+            } else if ($filter == 'delivery') {
+                $ships = $request->input('ship');
+                if (empty($ships)) return $this->show($orders);
+                $orders = Order::where('user_id', Auth::user()->id)->whereIn('delivery_status', $ships)->paginate(5);
+            } else if ($filter == 'arrange') {
+                $arrange = $request->input('arrange');
+                if (empty($arrange)) return $this->show($orders);
+                $arrange = explode(",", $arrange);
+                $part_1 = $arrange[0];
+                $part_2 = $arrange[1];
+                $orders = Order::where('user_id', Auth::user()->id)->orderBy($part_1, $part_2)->paginate(5);
+            }
         }
-        // else if ($filter == 'type') {
-        //     $types = $request->input('types');
-        //     if (empty($types)) return $this->show($products);
-        //     $products = Product::whereIn('type', $types)->paginate(5);
-        // } else if ($filter == 'search') {
-        //     $keyword = $request->input('keyword');
-        //     if (empty($keyword)) return $this->show($products);
-        //     $products = Product::where('name', 'LIKE', "%{$keyword}%")->paginate(5);
-        // }
-        return $this->show($orders);
+        $request->session()->put('orders', $orders);
+        return redirect()->route('order.show', ['status' => $status]);
+    }
+    function search_ajax(Request $request)
+    {
+        if ($request->input('query')) {
+
+            $query = $request->input('query');
+            $data = Order::find($query);
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+            if (!empty($data->id))
+                $output .= '
+               <li class ="px-3"><a href="' . route('order.detail', $data->id) . '">' . "Đơn hàng  #" . $data->id . '</a></li>
+               ';
+            else
+                $output .= '
+            <li class ="px-3">' . "Không tồn tại đơn hàng trên"  . '</li>
+            ';
+            $output .= '</ul>';
+            echo $output;
+        }
     }
 }

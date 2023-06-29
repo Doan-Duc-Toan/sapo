@@ -29,15 +29,11 @@
                             <div class="p-cart-detail">
                                 <div class="img-p-cart">
                                     @php
-                                        $thumbs = $order_detail->product->thumbs;
-                                        foreach ($thumbs as $thumb) {
-                                            if ($thumb->color->id == $order_detail->color->id) {
-                                                $link = $thumb->link;
-                                                break;
-                                            }
-                                        }
+                                        $thumb = $order_detail->product->thumbs->where('color_id', $order_detail->color->id)->first();
                                     @endphp
-                                    <img src="{{ asset($link) }}" alt="">
+                                    @if (!empty($thumb))
+                                        <img src="{{ asset($thumb->link) }}" alt="">
+                                    @endif
                                 </div>
                                 <div class="p-cart-name">
                                     <a href="{{ route('c_product.detail', [$order_detail->product->name, $order_detail->product->id]) }}"

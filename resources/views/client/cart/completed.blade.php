@@ -47,22 +47,22 @@
                         <span class="oi-title">
                             Phương thức thanh toán
                         </span><br>
-                        <span class="pay-method oi-info">{{$order->payment_method}}</span>
+                        <span class="pay-method oi-info">{{ $order->payment_method }}</span>
                     </div>
                     <div id="oi-right">
                         <span class="oi-title">
                             Địa chỉ nhận hàng
                         </span><br>
-                        <span class="name oi-info">{{$customer->fullname}}</span><br>
-                        <span class="address oi-info">{{$order->delivery_address}}</span><br>
-                        <span class="phone oi-info">{{$customer->phone}}</span><br><br>
+                        <span class="name oi-info">{{ $customer->fullname }}</span><br>
+                        <span class="address oi-info">{{ $order->delivery_address }}</span><br>
+                        <span class="phone oi-info">{{ $customer->phone }}</span><br><br>
                         <span class="oi-title">
                             Phương thức vận chuyển
                         </span><br>
-                        <span class="tran-method oi-info">{{$order->delivery_method}}</span>
+                        <span class="tran-method oi-info">{{ $order->delivery_method }}</span>
                     </div>
                 </div>
-                <a href="{{route('client.index')}}" class="back">Tiếp tục mua hàng</a>
+                <a href="{{ route('client.index') }}" class="back">Tiếp tục mua hàng</a>
             </div>
         </div>
         <div id="right">
@@ -73,15 +73,12 @@
                         <li class="product-item">
                             <div class="p-img">
                                 @php
-                                    $thumbs = $order_detail->product->thumbs;
-                                    foreach ($thumbs as $thumb) {
-                                        if ($thumb->color->id == $order_detail->color->id) {
-                                            $link = $thumb->link;
-                                            break;
-                                        }
-                                    }
+                                    $thumb = $order_detail->product->thumbs->where('color_id', $order_detail->color->id)->first();
+                                    
                                 @endphp
-                                <img class="p-img" src="{{ asset($link) }}" alt="">
+                                @if (!empty($thumb))
+                                    <img class="p-img" src="{{ asset($thumb->link) }}" alt="">
+                                @endif
                                 <span class="count center">{{ $order_detail->count }}</span>
                             </div>
                             <span class="p-name">{{ $order_detail->product->name }}</span>

@@ -108,7 +108,8 @@
                             <label for="cod">Thanh toán khi nhận hàng (COD)</label>
                         </div>
                         <div class="bot-item">
-                            <input type="radio" id="bank" name="payment_method" value="Chuyển khoản qua ngân hàng">
+                            <input type="radio" id="bank" name="payment_method"
+                                value="Chuyển khoản qua ngân hàng">
                             <label for="bank">Chuyển khoản qua ngân hàng</label>
                         </div>
                         <div class="bot-item">
@@ -133,15 +134,12 @@
                         <li class="product-item">
                             <div class="p-img">
                                 @php
-                                    $thumbs = $order_detail->product->thumbs;
-                                    foreach ($thumbs as $thumb) {
-                                        if ($thumb->color->id == $order_detail->color->id) {
-                                            $link = $thumb->link;
-                                            break;
-                                        }
-                                    }
+                                    $thumb = $order_detail->product->thumbs->where('color_id', $order_detail->color->id)->first();
+                                    
                                 @endphp
-                                <img class="p-img" src="{{ asset($link) }}" alt="">
+                                @if (!empty($thumb))
+                                    <img class="p-img" src="{{ asset($thumb->link) }}" alt="">
+                                @endif
                                 <span class="count center">{{ $order_detail->count }}</span>
                             </div>
                             <span class="p-name">{{ $order_detail->product->name }}</span>
