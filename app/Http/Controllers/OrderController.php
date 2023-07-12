@@ -17,11 +17,12 @@ class OrderController extends Controller
         $current_status = $request->input('status');
         if (!$current_status) $current_status = 'all';
         $orders = $request->session()->get('orders');
+        
         session()->forget('orders');
         if (!$orders)
             if ($current_status == 'all')
-                $orders = Order::paginate(5);
-            else $orders = Order::where('user_id', Auth::user()->id)->paginate(5);
+                $orders = Order::get();
+            else $orders = Order::where('user_id', Auth::user()->id)->get();
         return view('admin.order.show', compact('orders', 'current_status'));
     }
     function detail($id)
@@ -150,60 +151,60 @@ class OrderController extends Controller
         $status = $request->input('status');
         $filter = $request->input('btn_filter');
         if ($status == 'all') {
-            $orders = Order::paginate(5);
+            $orders = Order::get();
             if ($filter == 'type') {
                 $type = $request->input('type');
                 if (empty($type)) return $this->show($orders);
                 if ($type == 'open') {
-                    $orders = Order::whereNot('delivery_status', 'Đã hủy')->whereNot('delivery_status', 'Hoàn thành')->paginate(5);
+                    $orders = Order::whereNot('delivery_status', 'Đã hủy')->whereNot('delivery_status', 'Hoàn thành')->get();
                 } else if ($type == 'store') {
-                    $orders = Order::where('delivery_status', 'Hoàn thành')->paginate(5);
+                    $orders = Order::where('delivery_status', 'Hoàn thành')->get();
                 } else {
-                    if ($type == 'cancel') $orders = Order::where('delivery_status', 'Đã hủy')->paginate(5);
+                    if ($type == 'cancel') $orders = Order::where('delivery_status', 'Đã hủy')->get();
                 }
             } else if ($filter == 'payment') {
                 $payment = $request->input('payment');
                 if (empty($payment)) return $this->show($orders);
-                $orders = Order::where('payment_status', $payment)->paginate(5);
+                $orders = Order::where('payment_status', $payment)->get();
             } else if ($filter == 'delivery') {
                 $ships = $request->input('ship');
                 if (empty($ships)) return $this->show($orders);
-                $orders = Order::whereIn('delivery_status', $ships)->paginate(5);
+                $orders = Order::whereIn('delivery_status', $ships)->get();
             } else if ($filter == 'arrange') {
                 $arrange = $request->input('arrange');
                 if (empty($arrange)) return $this->show($orders);
                 $arrange = explode(",", $arrange);
                 $part_1 = $arrange[0];
                 $part_2 = $arrange[1];
-                $orders = Order::orderBy($part_1, $part_2)->paginate(5);
+                $orders = Order::orderBy($part_1, $part_2)->get();
             }
         } else {
-            $orders = Order::where('user_id', Auth::user()->id)->paginate(5);
+            $orders = Order::where('user_id', Auth::user()->id)->get();
             if ($filter == 'type') {
                 $type = $request->input('type');
                 if (empty($type)) return $this->show($orders);
                 if ($type == 'open') {
-                    $orders = Order::where('user_id', Auth::user()->id)->whereNot('delivery_status', 'Đã hủy')->whereNot('delivery_status', 'Hoàn thành')->paginate(5);
+                    $orders = Order::where('user_id', Auth::user()->id)->whereNot('delivery_status', 'Đã hủy')->whereNot('delivery_status', 'Hoàn thành')->get();
                 } else if ($type == 'store') {
-                    $orders = Order::where('user_id', Auth::user()->id)->where('delivery_status', 'Hoàn thành')->paginate(5);
+                    $orders = Order::where('user_id', Auth::user()->id)->where('delivery_status', 'Hoàn thành')->get();
                 } else {
-                    if ($type == 'cancel') $orders = Order::where('user_id', Auth::user()->id)->where('delivery_status', 'Đã hủy')->paginate(5);
+                    if ($type == 'cancel') $orders = Order::where('user_id', Auth::user()->id)->where('delivery_status', 'Đã hủy')->get();
                 }
             } else if ($filter == 'payment') {
                 $payment = $request->input('payment');
                 if (empty($payment)) return $this->show($orders);
-                $orders = Order::where('user_id', Auth::user()->id)->where('payment_status', $payment)->paginate(5);
+                $orders = Order::where('user_id', Auth::user()->id)->where('payment_status', $payment)->get();
             } else if ($filter == 'delivery') {
                 $ships = $request->input('ship');
                 if (empty($ships)) return $this->show($orders);
-                $orders = Order::where('user_id', Auth::user()->id)->whereIn('delivery_status', $ships)->paginate(5);
+                $orders = Order::where('user_id', Auth::user()->id)->whereIn('delivery_status', $ships)->get();
             } else if ($filter == 'arrange') {
                 $arrange = $request->input('arrange');
                 if (empty($arrange)) return $this->show($orders);
                 $arrange = explode(",", $arrange);
                 $part_1 = $arrange[0];
                 $part_2 = $arrange[1];
-                $orders = Order::where('user_id', Auth::user()->id)->orderBy($part_1, $part_2)->paginate(5);
+                $orders = Order::where('user_id', Auth::user()->id)->orderBy($part_1, $part_2)->get();
             }
         }
         $request->session()->put('orders', $orders);

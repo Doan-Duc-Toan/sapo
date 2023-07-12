@@ -165,7 +165,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $products->links('pagination::bootstrap-5') }}
+                        {{-- {{ $products->links('pagination::bootstrap-5') }} --}}
                     </div>
 
                 </div>

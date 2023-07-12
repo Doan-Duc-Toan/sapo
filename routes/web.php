@@ -11,6 +11,8 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ClientCustomerController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DashboardController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -76,6 +78,7 @@ Route::middleware('auth')->group(function () {
     Route::post('admin/order/to_return/{id}', [OrderController::class, 'to_return'])->name('order.to_return');
     Route::post('admin/order/filter', [OrderController::class, 'filter'])->name('order.filter');
     Route::get('admin/order/search', [OrderController::class, 'search_ajax'])->name('order.search_ajax');
+    Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 });
 Route::get('sapo/login', [ClientCustomerController::class, 'login'])->name('client.login');

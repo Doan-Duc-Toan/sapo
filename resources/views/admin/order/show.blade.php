@@ -200,7 +200,7 @@ if($order->delivery_status == 'Đã giao')echo 'bg-success';
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $orders->links('pagination::bootstrap-5') }}
+                        {{-- {{ $orders->links('pagination::bootstrap-5') }} --}}
                     </div>
 
                 </div>

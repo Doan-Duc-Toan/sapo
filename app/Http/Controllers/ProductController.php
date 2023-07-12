@@ -150,7 +150,7 @@ class ProductController extends Controller
                 $product->save();
                 $product->colors()->sync($request->input('colors', []));
                 return redirect()->route('product.show')->with('status', 'Đã chỉnh sửa sản phẩm thành công');
-            } else if ($request->input('btn_act' == 'delete')) {
+            } else if ($request->input('btn_act') == 'delete') {
                 $product->delete();
                 return redirect()->route('product.show')->with('status', 'Đã xóa sản phẩm thành công');
             }
@@ -175,38 +175,38 @@ class ProductController extends Controller
     }
     public function filter(Request $request)
     {
-        $products = Product::paginate(5);
+        $products = Product::get();
         $filter = $request->input('btn_filter');
         if ($filter == 'supplier') {
             $supplier = $request->input('supplier');
             if (empty($supplier)) return $this->show($products);
-            $products = Product::where('supplier', $supplier)->paginate(5);
+            $products = Product::where('supplier', $supplier)->get();
         } else if ($filter == 'arrange') {
             $arrange = $request->input('arrange');
             if (empty($arrange)) return $this->show($products);
             $arrange = explode(",", $arrange);
             $part_1 = $arrange[0];
             $part_2 = $arrange[1];
-            $products = Product::orderBy($part_1, $part_2)->paginate(5);
+            $products = Product::orderBy($part_1, $part_2)->get();
         } else if ($filter == 'cat') {
             $cats = $request->input('cats');
             if (empty($cats)) return $this->show($products);
             $product_ids = Product_cat::whereIn('cat_id', $cats)->distinct()->pluck('product_id')->toArray();
-            $products = Product::whereIn('id', $product_ids)->paginate(5);
+            $products = Product::whereIn('id', $product_ids)->get();
         } else if ($filter == 'type') {
             $types = $request->input('types');
             if (empty($types)) return $this->show($products);
-            $products = Product::whereIn('type', $types)->paginate(5);
+            $products = Product::whereIn('type', $types)->get();
         } else if ($filter == 'search') {
             $keyword = $request->input('keyword');
             if (empty($keyword)) return $this->show($products);
-            $products = Product::where('name', 'LIKE', "%{$keyword}%")->paginate(5);
+            $products = Product::where('name', 'LIKE', "%{$keyword}%")->get();
         }
         return $this->show($products);
     }
     public function show($products =  null)
     {
-        if (!$products) $products = Product::paginate(5);
+        if (!$products) $products = Product::get();
         $cats = Cat::all();
         $types = Product::distinct()->pluck('type');
         $suppliers = Product::distinct()->pluck('supplier');

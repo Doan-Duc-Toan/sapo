@@ -27,34 +27,39 @@
                                     src="{{ asset('img/Sapo-logo (1).svg') }}" alt=""></a>
                         </li>
                         <li class="col-md-12 nav-item">
-                            <a class="item-link" href=""><i class="fa-solid fa-house"></i><span>Tổng
+                            <a class="item-link" href="{{ route('dashboard') }}"><i
+                                    class="fa-solid fa-house"></i><span>Tổng
                                     quan</span></a>
                         </li>
                         <li class="col-md-12 nav-item" id="order">
-                            <a href="{{route('order.show')}}" class="item-link"><i class="fa-solid fa-check-to-slot"></i><span>Đơn
+                            <a href="{{ route('order.show') }}" class="item-link"><i
+                                    class="fa-solid fa-check-to-slot"></i><span>Đơn
                                     hàng</span></a>
                             <i class="fa-solid fa-greater-than"></i>
                             <ul class="container sub-menu">
                                 <div class="row">
-                                    <li class="col-md-12"><a href="{{route('order.show')}}">Danh sách đơn hàng</a></li>
+                                    <li class="col-md-12"><a href="{{ route('order.show') }}">Danh sách đơn hàng</a>
+                                    </li>
                                     <li class="col-md-12"><a href="">Đơn hàng chưa hoàn tất</a></li>
                                 </div>
                             </ul>
                         </li>
 
                         <li class="col-md-12 nav-item" id="product">
-                            <a href="" class="item-link"><i class="fa-solid fa-box"></i><span>Sản phẩm</span>
+                            <a href="{{ route('product.show') }}" class="item-link"><i
+                                    class="fa-solid fa-box"></i><span>Sản phẩm</span>
                             </a>
                             <i class="fa-solid fa-greater-than"></i>
                             <ul class="container sub-menu">
                                 <div class="row">
-                                    <li class="col-md-12"><a href="{{route('product.show')}}">Danh sách sản phẩm</a></li>
-                                    <li class="col-md-12"><a href="{{route('cat.show')}}">Danh mục sản phẩm</a></li>
-                                    <li class="col-md-12"><a href="{{route('product.add')}}">Thêm sản phẩm</a></li>
+                                    <li class="col-md-12"><a href="{{ route('product.show') }}">Danh sách sản phẩm</a>
+                                    </li>
+                                    <li class="col-md-12"><a href="{{ route('cat.show') }}">Danh mục sản phẩm</a></li>
+                                    <li class="col-md-12"><a href="{{ route('product.add') }}">Thêm sản phẩm</a></li>
                                 </div>
                             </ul>
                         </li>
-                        <li class="col-md-12 nav-item" id="product">
+                        {{-- <li class="col-md-12 nav-item" id="product">
                             <a href="" class="item-link"><i class="fa-solid fa-chart-simple"></i><span>Báo
                                     cáo</span>
                             </a>
@@ -66,9 +71,10 @@
                                     <li class="col-md-12"><a href="">Quản lý kho cá nhân</a></li>
                                 </div>
                             </ul>
-                        </li>
+                        </li> --}}
                         <li class="col-md-12 nav-item" id="customer">
-                            <a href="{{route('customer.show')}}" class="item-link"><i class="fa-solid fa-users"></i><span>Danh sách khách
+                            <a href="{{ route('customer.show') }}" class="item-link"><i
+                                    class="fa-solid fa-users"></i><span>Danh sách khách
                                     hàng</span></a>
                         </li>
                         @canany(['permission.add', 'permission.show', 'permission.delete', 'permission.edit',
@@ -181,7 +187,7 @@
                                  <li><a href='#'>Hỗ trợ</a></li>
                              </ul>
                             ">
-                                <img src="img/334669696_1373825946523935_1217185962917942019_n.jpg" alt="">
+                                <img src="{{asset('img/334669696_1373825946523935_1217185962917942019_n.jpg')}}" alt="">
                                 <span class="name-user">{{ Auth::user()->fullname }}</span>
                                 <span class="status">Online</span>
                             </div>
@@ -254,7 +260,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
             integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous">
         </script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
         <script>
             const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
             const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
@@ -268,44 +274,6 @@
                     })
                 })
             })
-            const ctx = document.getElementById('myChart');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['1/1/2023', '1/2/2023', '1/3/2023', '1/4/2023', '1/5/2023', '1/6/2023'],
-                    datasets: [{
-                        label: 'Doanh thu(Triệu VNĐ)',
-                        data: [1.2, 1.8, 3, 2.5, 4, 7, 6.5],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(255, 159, 64, 0.2)',
-                            'rgba(255, 205, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(201, 203, 207, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgb(255, 99, 132)',
-                            'rgb(255, 159, 64)',
-                            'rgb(255, 205, 86)',
-                            'rgb(75, 192, 192)',
-                            'rgb(54, 162, 235)',
-                            'rgb(153, 102, 255)',
-                            'rgb(201, 203, 207)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-
-            });
             
         </script>
 </body>
